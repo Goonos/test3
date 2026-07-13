@@ -217,50 +217,12 @@ const DATA = {
             summary: "HR 스키마 기준 WHERE 절 필터링, 논리 연산자 조율, ORDER BY 정렬 순서 우선순위 및 FETCH FIRST 명령어 응용력을 검증하는 종합 문제 풀이 백서입니다.",
             date: "2026-07-13",
             tags: ["Oracle", "WHERE", "ORDER BY"],
-            // 모달 팝업 내부로 깔끔하게 떨어지는 HTML 서식 (문제번호 매칭 정답링크 포함)
-            content: `
-                <div class="space-y-6">
-                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-gray-400">
-                        <strong>🛠️ 실습 환경 가이드</strong><br>
-                        - DB버전: Oracle Database 19c / 사용 스키마: HR (Human Resources)<br>
-                        - 각 문항 하단의 <span class="text-emerald-400 font-bold">[🔗 정답 SQL 보기]</span> 단추를 클릭하면 원격 저장소에 아카이빙된 검증 스크립트로 즉시 연결됩니다.
-                    </div>
-
-                    <div class="space-y-4 border-l border-gray-800 pl-4 ml-1">
-                        <div class="pb-4 border-b border-gray-800/50">
-                            <h4 class="text-white font-bold mb-1">[1번 문항] EMPLOYEES 테이블에서 부서 번호가 90인 사원의 사번, 성(last_name), 직무코드(job_id), 부서번호를 조회하시오.</h4>
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-gray-500 text-xs font-mono">파일명: ch03_01.sql</span>
-                                <a href="https://github.com/your-github-id/kos_oracle/blob/main/quizzes/answers/ch03_01.sql" target="_blank" class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded hover:bg-emerald-500/20 transition flex items-center gap-1">
-                                    <i class="fab fa-github"></i> 정답 SQL 보기 ↗
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="pb-4 border-b border-gray-800/50">
-                            <h4 class="text-white font-bold mb-1">[2번 문항] 1번 결과에서 조건을 급여가 3,000 이하로 변경하여 last_name과 salary를 조회하시오.</h4>
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-gray-500 text-xs font-mono">파일명: ch03_02.sql</span>
-                                <a href="https://github.com/your-github-id/kos_oracle/blob/main/quizzes/answers/ch03_02.sql" target="_blank" class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded hover:bg-emerald-500/20 transition flex items-center gap-1">
-                                    <i class="fab fa-github"></i> 정답 SQL 보기 ↗
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="pb-4 border-b border-gray-800/50">
-                            <h4 class="text-white font-bold mb-1">[3번 문항] EMPLOYEES 테이블에서 last_name이 정확히 'Abel'인 사원의 모든 정보를 조회하시오.</h4>
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-gray-500 text-xs font-mono">파일명: ch03_03.sql</span>
-                                <a href="https://github.com/your-github-id/kos_oracle/blob/main/quizzes/answers/ch03_03.sql" target="_blank" class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded hover:bg-emerald-500/20 transition flex items-center gap-1">
-                                    <i class="fab fa-github"></i> 정답 SQL 보기 ↗
-                                </a>
-                            </div>
-                        </div>
-                        
-                        </div>
-                </div>
-            `
+            // 🤖 자동화 파싱을 위한 메타데이터
+            mdFile: "quizzes/ch03.md", // 읽어올 깃허브 마크다운 파일 경로
+            prefix: "ch03", // sql 파일명 생성용 접두사 (ch03_01.sql 형태)
+            githubBase: "https://github.com/본인아이디/kos_oracle/blob/main/quizzes/answers" // 정답 파일이 있는 깃허브 폴더 주소
         }
+        // 앞으로 ch04가 생기면 똑같이 이 블록만 추가하면 끝입니다!
     ]
 };
 
