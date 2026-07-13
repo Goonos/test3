@@ -206,13 +206,7 @@ const DATA = {
         { id: "img-07", src: "image/7.jpg", title: "[Learn & Run]", comment: "박찬권 저자의 오라클 SQL 파워업 출간 전 베타테스트 및 스터디 " },
         { id: "img-08", src: "image/8.jpg", title: "[Learn & Run]", comment: "지인들로 팀을 만들어 개발프로젝트 진행" },
         { id: "img-09", src: "image/9.jpg", title: "[Learn & Run]", comment: "스터디와 밸런스를 맞추며 에너지를 발산하는 풋살" }
-    ]
-
-    const DATA = {
-    troubleshooting: [ /* 기존 데이터 유지 */ ],
-    architecture: [ /* 기존 데이터 유지 */ ],
-    blogLogs: [ /* 기존 데이터 유지 */ ],
-    album: [ /* 기존 데이터 유지 */ ],
+    ],
     
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
@@ -269,4 +263,4 @@ const DATA = {
         }
     ]
 };
-};
+
