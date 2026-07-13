@@ -492,11 +492,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const quiz = DATA.quizzes.find(q => q.id === quizId);
         if (!quiz) return;
 
-        // 1. 헤더 정보 세팅
         if (quizModalChapter) quizModalChapter.innerText = quiz.chapter;
         if (quizModalTitle) quizModalTitle.innerText = quiz.title;
         
-        // 2. 로딩 스피너 표시 (Github에서 파일 읽어오는 동안)
         if (quizModalBody) {
             quizModalBody.innerHTML = `
                 <div class="flex flex-col items-center justify-center h-40 text-gray-400">
@@ -506,71 +504,66 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // 3. 모달 띄우기 애니메이션
         if (quizModal) {
             quizModal.classList.remove("hidden");
-            void quizModal.offsetWidth; // Force Reflow
+            void quizModal.offsetWidth;
             quizModal.classList.remove("opacity-0", "pointer-events-none");
             quizModal.classList.add("flex");
             if (quizModalContent) quizModalContent.classList.replace("scale-95", "scale-100");
             document.body.style.overflow = "hidden";
         }
 
-        // 4. 마크다운 Fetch 및 HTML 자동 생성 렌더링
         try {
             const response = await fetch(quiz.mdRawUrl);
             if (!response.ok) throw new Error("데이터를 불러오지 못했습니다.");
             const mdText = await response.text();
 
-            // 공통 환경 가이드 박스
             let htmlContent = `
                 <div class="space-y-6">
                     <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-gray-400">
                         <strong>🛠️ 실습 환경 가이드</strong><br>
                         - DB버전: Oracle Database 19c / 사용 스키마: HR (Human Resources)<br>
-                        - 각 문항 하단의 <span class="text-emerald-400 font-bold">[🔗 정답 SQL 보기]</span> 단추를 클릭하면 원격 저장소에 아카이빙된 검증 스크립트로 즉시 연결됩니다.
+                        - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 원격 저장소의 검증 스크립트를 화면에 즉시 펼쳐줍니다.
                     </div>
                     <div class="space-y-4 border-l border-gray-800 pl-4 ml-1">
             `;
 
-            // 1️⃣ [버그 수정 핵심] 오라클 테이블 구분선(-----------) 내부에 포함된 대시 문자에 반응하지 않도록,
-            // 한 라인 전체가 오직 '---'로만 이루어진 마크다운 수평선만 정확히 골라내어 문제를 쪼갭니다.
+            // 한 줄 전체가 오직 '---'로만 이루어진 마크다운 수평선 기준으로 쪼개기
             const problems = mdText.split(/^\s*---\s*$/m);
 
             problems.forEach(problem => {
                 const text = problem.trim();
-                if (!text) return; // 빈 텍스트면 건너뜀
+                if (!text) return;
 
-                // 2️⃣ [숫자번] 패턴을 찾아냅니다.
                 const numMatch = text.match(/\[(\d+)번\]/);
                 if (!numMatch) return;
 
-                const qNum = numMatch[1]; // "1"
+                const qNum = numMatch[1];
 
-                // 3️⃣ 백틱(```) 코드 블록을 추출합니다.
                 const codeMatch = text.match(/```([\s\S]*?)```/);
                 const codeContent = codeMatch ? codeMatch[1].trim() : '';
 
-                // 4️⃣ [숫자번] 태그와 코드 블록을 제외한 순수 "문제 내용 전체"를 추출합니다.
                 let qText = '';
                 if (codeMatch) {
-                    // 코드 블록이 있는 경우: [숫자번] 뒤부터 ``` 시작 전까지 전부 가져옴
                     const treatText = text.split('```')[0];
                     qText = treatText.replace(/\[\d+번\]\s*/, '').trim();
                 } else {
-                    // 코드 블록이 없는 경우: [숫자번] 뒤의 전체 텍스트
                     qText = text.replace(/\[\d+번\]\s*/, '').trim();
                 }
 
-                // 줄바꿈 문자(\n)를 HTML 브레이크 태그(<br>)로 변경하여 화면 짤림 방지
+                // 🔥 [요구사항 1] 문제 내부의 모든 ** 또는 **** 마크다운 강조 기호 완전히 제거하기
+                qText = qText.replace(/\*\*/g, '');
+
+                // 줄바꿈 반영
                 qText = qText.replace(/\n/g, '<br>');
 
-                // 파일번호 두 자리 맞추기 (1 -> 01)
+                // 파일명 및 Raw 주소 빌드
                 const paddedNum = String(qNum).padStart(2, '0');
                 const fileName = `${quiz.prefix}_${paddedNum}.sql`;
-                const fileUrl = `${quiz.githubBaseUrl}/${fileName}`;
+                // 코드 내용을 순수 텍스트로 가져와야 하므로 raw 주소 기반으로 연결합니다.
+                const rawFileUrl = `https://raw.githubusercontent.com/본인아이디/kos_oracle/main/quizzes/answers/${fileName}`;
 
-                // 5️⃣ HTML 블록 조립
+                // HTML 조립
                 htmlContent += `
                     <div class="pb-5 border-b border-gray-800/50">
                         <h4 class="text-white font-bold mb-3 text-sm md:text-base leading-relaxed">[${qNum}번] ${qText}</h4>
@@ -578,31 +571,31 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${codeContent ? `
                         <div class="bg-gray-950/80 rounded-lg p-3 md:p-4 mb-4 border border-gray-800 overflow-x-auto scrollbar-hide">
                             <span class="block text-[10px] text-gray-500 font-mono mb-2">💡 예상 실행 결과</span>
-                            <pre class="text-[10px] md:text-xs text-gray-300 font-mono whitespace-pre"><code class="language-sql">${codeContent}</code></pre>
+                            <pre class="text-[10px] md:text-xs text-gray-300 font-mono whitespace-pre"><code>${codeContent}</code></pre>
                         </div>
                         ` : ''}
                         
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-gray-500 text-xs font-mono">파일명: ${fileName}</span>
-                            <a href="${fileUrl}" target="_blank" class="px-2.5 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded-md hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all flex items-center gap-1.5">
-                                <i class="fab fa-github"></i> 정답 SQL 보기 ↗
-                            </a>
+                        <div class="flex flex-col gap-3 mt-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-500 text-xs font-mono">파일명: ${fileName}</span>
+                                <button onclick="toggleAnswerCode('${rawFileUrl}', 'ans-${quizId}-${qNum}')" class="px-2.5 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded-md hover:bg-emerald-500/20 hover:border-emerald-500/40 cursor-pointer transition-all flex items-center gap-1.5">
+                                    <i class="fas fa-code"></i> 정답 SQL 보기 <i class="fas fa-chevron-down text-[10px] ml-0.5"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="ans-${quizId}-${qNum}" class="hidden w-full bg-slate-900/90 border border-slate-800 rounded-lg p-3 md:p-4 overflow-x-auto scrollbar-hide">
+                                <span class="block text-[10px] text-emerald-400 font-mono mb-2">📝 정답 SQL 스크립트</span>
+                                <pre class="text-[10px] md:text-xs text-emerald-300 font-mono whitespace-pre"><code class="language-sql">로딩 중...</code></pre>
+                            </div>
                         </div>
                     </div>
                 `;
             });
 
-            htmlContent += `</div></div>`; // 닫는 태그
+            htmlContent += `</div></div>`;
 
-            // 생성된 HTML 삽입
             if (quizModalBody) {
                 quizModalBody.innerHTML = htmlContent;
-                // 코드 블록이 추가되었으니 구문 강조(Highlight.js)를 다시 적용합니다.
-                if (typeof hljs !== 'undefined') {
-                    quizModalBody.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightElement(block);
-                    });
-                }
             }
 
         } catch (error) {
@@ -612,9 +605,43 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="text-red-400 text-center py-10 bg-red-500/10 rounded-lg border border-red-500/20">
                         <i class="fas fa-exclamation-triangle mb-2 text-xl"></i><br>
                         문제 데이터를 불러오는 데 실패했습니다.<br>
-                        <span class="text-xs text-gray-500">Github 경로(${quiz.mdRawUrl})를 확인해 주세요.</span>
+                        <span class="text-xs text-gray-500">Github 경로를 확인해 주세요.</span>
                     </div>
                 `;
+            }
+        }
+    };
+
+    // 🚀 [요구사항 2 핵심 함수] 버튼을 누르면 인라인으로 코드를 비동기 래칭하고 온/오프 토글합니다.
+    window.toggleAnswerCode = async function(fileUrl, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // 이미 열려있다면 닫아줍니다 (토글 기능)
+        if (!container.classList.contains("hidden")) {
+            container.classList.add("hidden");
+            return;
+        }
+
+        // 박스 오픈
+        container.classList.remove("hidden");
+        const codeElement = container.querySelector("code");
+
+        // 만약 최초 1회 로딩 전 상태("로딩 중...")라면 비동기로 실제 파일 내용을 긁어옵니다.
+        if (codeElement && codeElement.innerText === "로딩 중...") {
+            try {
+                const res = await fetch(fileUrl);
+                if (!res.ok) throw new Error("코드를 가져오지 못했습니다.");
+                const sqlCode = await res.text();
+                
+                codeElement.innerText = sqlCode.trim();
+
+                // 새로 주입된 정답 코드 블록에 하이라이트(Highlight.js) 입히기
+                if (typeof hljs !== 'undefined') {
+                    hljs.highlightElement(codeElement);
+                }
+            } catch (err) {
+                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러올 수 없습니다.\n-- 경로를 확인하세요: ${fileUrl}`;
             }
         }
     };
