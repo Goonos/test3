@@ -561,7 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const paddedNum = String(qNum).padStart(2, '0');
                 const fileName = `${quiz.prefix}_${paddedNum}.sql`;
                 // 코드 내용을 순수 텍스트로 가져와야 하므로 raw 주소 기반으로 연결합니다.
-                const rawFileUrl = `https://raw.githubusercontent.com/본인아이디/kos_oracle/main/quizzes/answers/${fileName}`;
+                const rawFileUrl = `https://raw.githubusercontent.com/Goonos/test3/main/quizzes/answers/${fileName}`;
 
                 // HTML 조립
                 htmlContent += `
