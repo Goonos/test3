@@ -20,3 +20,9 @@ html {
     -webkit-box-orient: vertical;  
     overflow: hidden;
 }
+.tab-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tab-btn.active {
+    box-shadow: 0 -4px 10px -3px rgba(59, 130, 246, 0.2);
+}
