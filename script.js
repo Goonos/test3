@@ -612,16 +612,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    적용하신 라이브러리(sql-formatter)의 특징 때문에 발생한 문제입니다!
-
-이전 코드에서 언어 설정을 오라클 전용인 language: 'plsql'로 맞췄는데, 이 라이브러리의 plsql 파서는 기본적으로 BEGIN ... END 같은 프로시저(절차적) 블록에 최적화되어 있어서 단순한 SELECT 문을 만나면 줄바꿈을 무시하고 한 줄로 길게 늘어뜨리는 버그(특성)가 있습니다.
-
-이 현상을 해결하기 위해 파서를 가장 엄격하게 줄바꿈을 지키는 표준 'sql'로 변경하고, AND나 OR 같은 논리 연산자도 무조건 줄을 바꾼 뒤 들여쓰기를 하도록 옵션을 추가했습니다. 또한 / 기호가 확실하게 ;로 치환되도록 정규식도 강화했습니다.
-
-script.js 파일에서 window.toggleAnswerCode 함수 전체를 아래 코드로 교체해 주세요.
-
-🛠️ 완벽한 줄바꿈/들여쓰기가 적용된 toggleAnswerCode
-JavaScript
     // 🚀 [최종 업그레이드] 정답 코드 실시간 로드 및 완벽한 포맷팅 엔진
     window.toggleAnswerCode = async function(fileUrl, containerId) {
         const container = document.getElementById(containerId);
