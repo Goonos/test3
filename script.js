@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. 모달 열기 & 확장 애니메이션 적용
         if (archModal) {
             archModal.classList.remove("hidden");
-            // 브라우저 리플로우 강제 유발 (트랜지션을 위해)
             void archModal.offsetWidth; 
             archModal.classList.remove("opacity-0", "pointer-events-none");
             archModal.classList.add("flex");
@@ -35,11 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 archModalContent.classList.add("scale-100");
             }
             
-            // 배경 스크롤 방지
             document.body.style.overflow = "hidden";
         }
 
-        // 3. 백서 내부에 코드가 있다면 구문 강조 다시 적용
         setTimeout(() => {
             if (typeof hljs !== 'undefined') {
                 document.querySelectorAll('#arch-modal-body pre code').forEach((block) => {
@@ -51,29 +48,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.closeArchModal = function() {
         if (archModal) {
-            // 페이드아웃 및 축소 애니메이션 먼저 적용
             archModal.classList.add("opacity-0", "pointer-events-none");
             if (archModalContent) {
                 archModalContent.classList.remove("scale-100");
                 archModalContent.classList.add("scale-95");
             }
             
-            // 애니메이션 종료 후 hidden 처리 및 초기화
             setTimeout(() => {
                 archModal.classList.add("hidden");
                 archModal.classList.remove("flex");
                 document.body.style.overflow = "";
                 if (archModalBody) archModalBody.innerHTML = "";
-            }, 300); // duration-300 과 동일한 시간
+            }, 300);
         }
     };
 
-    // 닫기 버튼 이벤트
     if (archModalCloseBtn) {
         archModalCloseBtn.addEventListener("click", window.closeArchModal);
     }
-
-    // 모달 외부 영역(배경) 클릭 시 닫기
     if (archModal) {
         archModal.addEventListener("click", (e) => {
             if (e.target === archModal) {
@@ -83,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 1. 트러블슈팅 섹션 (좌우 무한 순환 3D 휠 슬라이더 - 자세히 보기 복구 완료)
+    // 1. 트러블슈팅 섹션
     // ==========================================
     try {
         const troubleContainer = document.getElementById("trouble-container");
@@ -164,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const codeId = targetId.replace("details-", "");
                     const codeWrapper = document.getElementById(`code-wrapper-${codeId}`);
                     const codeFade = document.getElementById(`code-fade-${codeId}`);
-
                     const icon = btn.querySelector("i");
                     const btnText = btn.querySelector("span");
 
@@ -178,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             codeWrapper.scrollTop = 0; 
                         }
                         if (codeFade) codeFade.style.opacity = "1";
-
                         if (icon) icon.style.transform = "rotate(0deg)";
                         if (btnText) btnText.innerText = "자세히 보기";
                         btn.classList.remove("bg-blue-500/10", "text-blue-400", "border-blue-500/30");
@@ -194,11 +184,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     let distance = idx - tCurrentPage;
                     
                     if (tTotalPages > 2) {
-                        if (distance > tTotalPages / 2) {
-                            distance -= tTotalPages;
-                        } else if (distance < -tTotalPages / 2) {
-                            distance += tTotalPages;
-                        }
+                        if (distance > tTotalPages / 2) distance -= tTotalPages;
+                        else if (distance < -tTotalPages / 2) distance += tTotalPages;
                     } else if (tTotalPages === 2) {
                         if (tCurrentPage === 0 && idx === 1) distance = 1;
                         if (tCurrentPage === 1 && idx === 0) distance = -1;
@@ -248,21 +235,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const tNextButtons = [document.getElementById("trouble-next"), document.getElementById("trouble-next-mobile")];
 
             tPrevButtons.forEach(btn => {
-                if (btn) {
-                    btn.addEventListener("click", () => {
-                        tCurrentPage = (tCurrentPage - 1 + tTotalPages) % tTotalPages;
-                        updateTroubleSlider();
-                    });
-                }
+                if (btn) btn.addEventListener("click", () => {
+                    tCurrentPage = (tCurrentPage - 1 + tTotalPages) % tTotalPages;
+                    updateTroubleSlider();
+                });
             });
 
             tNextButtons.forEach(btn => {
-                if (btn) {
-                    btn.addEventListener("click", () => {
-                        tCurrentPage = (tCurrentPage + 1) % tTotalPages;
-                        updateTroubleSlider();
-                    });
-                }
+                if (btn) btn.addEventListener("click", () => {
+                    tCurrentPage = (tCurrentPage + 1) % tTotalPages;
+                    updateTroubleSlider();
+                });
             });
 
             updateTroubleSlider();
@@ -277,13 +260,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     const codeId = targetId.replace("details-", "");
                     const codeWrapper = document.getElementById(`code-wrapper-${codeId}`);
                     const codeFade = document.getElementById(`code-fade-${codeId}`);
-
                     const icon = currentBtn.querySelector("i");
                     const btnText = currentBtn.querySelector("span");
 
                     if (targetEl.style.maxHeight === "" || targetEl.style.maxHeight === "0px") {
                         targetEl.style.maxHeight = targetEl.scrollHeight + "px";
-                        
                         if (codeWrapper) {
                             const maxExpandedHeight = 500; 
                             if (codeWrapper.scrollHeight > maxExpandedHeight) {
@@ -295,7 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         }
                         if (codeFade) codeFade.style.opacity = "0";
-
                         if (icon) icon.style.transform = "rotate(180deg)";
                         if (btnText) btnText.innerText = "접기";
                         currentBtn.classList.add("bg-blue-500/10", "text-blue-400", "border-blue-500/30");
@@ -306,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }, 510);
                     } else {
                         targetEl.style.maxHeight = "0px";
-                        
                         if (codeWrapper) {
                             codeWrapper.style.maxHeight = "160px";
                             codeWrapper.classList.remove("overflow-y-auto");
@@ -314,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             codeWrapper.scrollTop = 0; 
                         }
                         if (codeFade) codeFade.style.opacity = "1";
-
                         if (icon) icon.style.transform = "rotate(0deg)";
                         if (btnText) btnText.innerText = "자세히 보기";
                         currentBtn.classList.remove("bg-blue-500/10", "text-blue-400", "border-blue-500/30");
@@ -332,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 2. 아키텍처 섹션 (2x2 그리드) - 클릭 시 Modal 팝업
+    // 2. 아키텍처 섹션 (2x2 그리드)
     // ==========================================
     try {
         const quadContainer = document.getElementById("arch-quadrant-container");
@@ -343,11 +321,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 quadHtml += `
                     <div onclick="window.openArchModal('${item.id}')" class="arch-card w-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:border-blue-500/40 hover:bg-gray-800 transition-all duration-300 cursor-pointer group shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden flex flex-col justify-between h-full min-h-[200px] md:min-h-[220px]">
-                        
                         <div class="absolute -inset-full bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition duration-500 blur-2xl z-0"></div>
-                        
                         <i class="${item.icon} absolute -bottom-4 -right-4 text-7xl md:text-[7rem] text-gray-800/20 group-hover:text-blue-500/5 transition duration-500 transform group-hover:scale-110 z-0"></i>
-
                         <div class="relative z-10">
                             <div class="arch-header flex items-center gap-3 md:gap-4 mb-4 pb-4 border-b border-gray-800/80 transition-all duration-300">
                                 <div class="w-11 h-11 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition shadow-inner">
@@ -357,7 +332,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <strong class="text-lg md:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-wide">${item.pillar}</strong>
                                 </div>
                             </div>
-                            
                             <h3 class="arch-title text-sm md:text-base font-bold text-gray-200 mb-2 transition-all duration-300">${item.title}</h3>
                             <p class="arch-summary text-gray-400 text-xs md:text-sm leading-relaxed mb-5 transition-all duration-300">${item.summary}</p>
                             <div class="flex gap-1.5 flex-wrap">${tags}</div>
@@ -372,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 💡 3. 블로그 및 퀴즈 아카이브 멀티 통합 슬라이더 엔진
+    // 💡 3. 블로그 및 퀴즈 아카이브 멀티 통합 슬라이더
     // ==========================================
     try {
         const blogContainer = document.getElementById("blog-container");
@@ -383,15 +357,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const tabBlogBtn = document.getElementById("tab-blog");
         const tabQuizBtn = document.getElementById("tab-quiz");
 
-        let currentMode = 'blog'; // 'blog' 또는 'quiz'
+        let currentMode = 'blog'; 
         let blogPage = 0;
         let quizPage = 0;
-        
         const itemsPerPage = 6;
 
-        // A. 데이터 빌드 및 그리드 인젝션 함수
         function initLogs() {
-            // 1) 블로그 데이터 파싱
             if (blogContainer && DATA.blogLogs) {
                 blogContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.blogLogs.length / itemsPerPage);
@@ -418,7 +389,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // 2) 퀴즈 데이터 파싱 (Zero-Downtime 형태 팝업 호출 내장)
             if (quizContainer && DATA.quizzes) {
                 quizContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.quizzes.length / itemsPerPage);
@@ -447,7 +417,6 @@ document.addEventListener("DOMContentLoaded", () => {
             updateLogSlider();
         }
 
-        // B. 활성화된 탭 및 슬라이더 이동 연산 비즈니스 로직
         function updateLogSlider() {
             const isBlog = (currentMode === 'blog');
             const activeContainer = isBlog ? blogContainer : quizContainer;
@@ -455,7 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
             const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
 
-            // 타겟 컨테이너 가시성 스위칭
             if(isBlog) {
                 blogContainer.classList.remove("hidden");
                 quizContainer.classList.add("hidden");
@@ -464,18 +432,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 blogContainer.classList.add("hidden");
             }
 
-            // 슬라이드 트랜스폼 연산
             if (activeContainer) {
                 activeContainer.style.transform = `translateX(-${targetPage * 100}%)`;
             }
 
-            // 인디케이터 라벨 동기화
             const text = `Page ${targetPage + 1} / ${totalPages}`;
             if (logIndicator) logIndicator.innerText = text;
             if (logIndicatorMobile) logIndicatorMobile.innerText = text;
         }
 
-        // C. 탭 스위칭 클릭 핸들러
         function switchTab(mode) {
             currentMode = mode;
             if (mode === 'blog') {
@@ -491,17 +456,14 @@ document.addEventListener("DOMContentLoaded", () => {
         tabBlogBtn?.addEventListener("click", () => switchTab('blog'));
         tabQuizBtn?.addEventListener("click", () => switchTab('quiz'));
 
-        // D. 공용 네비게이션 트리거 결합
         const navigate = (direction) => {
             const isBlog = (currentMode === 'blog');
             const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
             const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
             
-            if (isBlog) {
-                blogPage = (blogPage + direction + totalPages) % totalPages;
-            } else {
-                quizPage = (quizPage + direction + totalPages) % totalPages;
-            }
+            if (isBlog) blogPage = (blogPage + direction + totalPages) % totalPages;
+            else quizPage = (quizPage + direction + totalPages) % totalPages;
+            
             updateLogSlider();
         };
 
@@ -510,7 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("log-prev-mobile")?.addEventListener("click", () => navigate(-1));
         document.getElementById("log-next-mobile")?.addEventListener("click", () => navigate(1));
 
-        // 최초 구동 시동
         initLogs();
 
     } catch (err) {
@@ -518,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 💡 4. 퀴즈 상세 모달 인터랙션 제어 모듈
+    // 💡 4. 퀴즈 상세 모달 인터랙션 제어
     // ==========================================
     const quizModal = document.getElementById("quiz-modal");
     const quizModalContent = document.getElementById("quiz-modal-content");
@@ -538,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (quizModal) {
             quizModal.classList.remove("hidden");
-            void quizModal.offsetWidth; // Force Reflow
+            void quizModal.offsetWidth; 
             quizModal.classList.remove("opacity-0", "pointer-events-none");
             quizModal.classList.add("flex");
             if (quizModalContent) quizModalContent.classList.replace("scale-95", "scale-100");
@@ -561,10 +522,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quizModalCloseBtn?.addEventListener("click", window.closeQuizModal);
     quizModal?.addEventListener("click", (e) => { if (e.target === quizModal) window.closeQuizModal(); });
-});
 
     // ==========================================
-    // 4. 미니 앨범 (Gallery 모달)
+    // 5. 미니 앨범 (Gallery 모달)
     // ==========================================
     try {
         const albumGrid = document.getElementById("album-grid");
@@ -650,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 5. 구문 강조(Highlight.js) 모듈 최초 로드
+    // 6. 구문 강조(Highlight.js) 모듈 최초 로드
     // ==========================================
     try {
         if (typeof hljs !== 'undefined') {
@@ -659,4 +619,4 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {
         console.error("Highlight.js 모듈 로드 누락 예외 처리:", e);
     }
-});
+}); // 💡 여기가 유일하고 올바른 닫는 괄호입니다!
