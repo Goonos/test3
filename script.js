@@ -372,81 +372,196 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 3. 블로그 로그 (2x3 슬라이더)
+    // 💡 3. 블로그 및 퀴즈 아카이브 멀티 통합 슬라이더 엔진
     // ==========================================
     try {
         const blogContainer = document.getElementById("blog-container");
-        const blogIndicator = document.getElementById("blog-indicator");
-        const blogIndicatorMobile = document.getElementById("blog-indicator-mobile");
+        const quizContainer = document.getElementById("quiz-container");
+        const logIndicator = document.getElementById("log-indicator");
+        const logIndicatorMobile = document.getElementById("log-indicator-mobile");
         
-        if (blogContainer && DATA.blogLogs && DATA.blogLogs.length > 0) {
-            const itemsPerPage = 6;
-            const totalItems = DATA.blogLogs.length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            let currentPage = 0;
+        const tabBlogBtn = document.getElementById("tab-blog");
+        const tabQuizBtn = document.getElementById("tab-quiz");
 
-            blogContainer.innerHTML = "";
+        let currentMode = 'blog'; // 'blog' 또는 'quiz'
+        let blogPage = 0;
+        let quizPage = 0;
+        
+        const itemsPerPage = 6;
 
-            for (let i = 0; i < totalPages; i++) {
-                const startIdx = i * itemsPerPage;
-                const endIdx = Math.min(startIdx + itemsPerPage, totalItems);
-                const chunk = DATA.blogLogs.slice(startIdx, endIdx);
-
-                let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 px-1 box-border">`;
-
-                chunk.forEach(item => {
-                    const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono break-keep">#${tag}</span>`).join(" ");
-                    pageHtml += `
-                        <div class="bg-gray-800/30 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/50 transition h-44">
-                            <div>
-                                <span class="text-[10px] md:text-xs text-gray-500 font-mono">${item.date}</span>
-                                <h3 class="text-sm md:text-base font-bold text-white mt-1 mb-1.5 line-clamp-1">${item.title}</h3>
-                                <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">${item.summary}</p>
-                            </div>
-                            <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
-                                <div class="flex flex-wrap gap-1">${tagsHtml}</div>
-                                <a href="${item.link}" target="_blank" class="text-[10px] md:text-xs text-gray-400 hover:text-blue-400 font-medium flex items-center gap-1 shrink-0 ml-2">
-                                    원문 ↗
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                pageHtml += `</div>`;
-                blogContainer.innerHTML += pageHtml;
+        // A. 데이터 빌드 및 그리드 인젝션 함수
+        function initLogs() {
+            // 1) 블로그 데이터 파싱
+            if (blogContainer && DATA.blogLogs) {
+                blogContainer.innerHTML = "";
+                const totalPages = Math.ceil(DATA.blogLogs.length / itemsPerPage);
+                for (let i = 0; i < totalPages; i++) {
+                    const chunk = DATA.blogLogs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    chunk.forEach(item => {
+                        const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
+                        pageHtml += `
+                            <div class="bg-gray-800/30 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/50 transition h-44">
+                                <div>
+                                    <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
+                                    <h3 class="text-sm font-bold text-white mt-1 mb-1.5 line-clamp-1">${item.title}</h3>
+                                    <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">${item.summary}</p>
+                                </div>
+                                <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
+                                    <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                                    <a href="${item.link}" target="_blank" class="text-[10px] text-gray-400 hover:text-blue-400 font-medium shrink-0 ml-2">원문 ↗</a>
+                                </div>
+                            </div>`;
+                    });
+                    pageHtml += `</div>`;
+                    blogContainer.innerHTML += pageHtml;
+                }
             }
 
-            function updateSlider() {
-                const offset = currentPage * 100;
-                if (blogContainer) blogContainer.style.transform = `translateX(-${offset}%)`;
-
-                const indicatorText = `Page ${currentPage + 1} / ${totalPages}`;
-                if (blogIndicator) blogIndicator.innerText = indicatorText;
-                if (blogIndicatorMobile) blogIndicatorMobile.innerText = indicatorText;
+            // 2) 퀴즈 데이터 파싱 (Zero-Downtime 형태 팝업 호출 내장)
+            if (quizContainer && DATA.quizzes) {
+                quizContainer.innerHTML = "";
+                const totalPages = Math.ceil(DATA.quizzes.length / itemsPerPage);
+                for (let i = 0; i < totalPages; i++) {
+                    const chunk = DATA.quizzes.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    chunk.forEach(item => {
+                        const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-emerald-400 bg-emerald-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
+                        pageHtml += `
+                            <div onclick="window.openQuizModal('${item.id}')" class="bg-gray-800/20 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/60 hover:border-emerald-500/30 transition h-44 cursor-pointer group">
+                                <div>
+                                    <span class="text-[10px] text-emerald-400 font-mono font-bold">${item.chapter}</span> • <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
+                                    <h3 class="text-sm font-bold text-white mt-1 mb-1.5 line-clamp-1 group-hover:text-emerald-300 transition">${item.title}</h3>
+                                    <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">${item.summary}</p>
+                                </div>
+                                <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
+                                    <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                                    <span class="text-[10px] text-gray-400 group-hover:text-emerald-400 font-medium">열기 ↗</span>
+                                </div>
+                            </div>`;
+                    });
+                    pageHtml += `</div>`;
+                    quizContainer.innerHTML += pageHtml;
+                }
             }
-
-            [document.getElementById("blog-prev"), document.getElementById("blog-prev-mobile")].forEach(btn => {
-    btn?.addEventListener("click", () => {
-        // 첫 페이지에서 이전 버튼 클릭 시 마지막 페이지로 순환
-        currentPage = (currentPage - 1 + totalPages) % totalPages; 
-        updateSlider();
-    });
-});
-
-[document.getElementById("blog-next"), document.getElementById("blog-next-mobile")].forEach(btn => {
-    btn?.addEventListener("click", () => {
-        // 마지막 페이지에서 다음 버튼 클릭 시 첫 페이지로 순환
-        currentPage = (currentPage + 1) % totalPages; 
-        updateSlider();
-    });
-});
-
-            updateSlider();
+            updateLogSlider();
         }
-    } catch (e) {
-        console.error("Blog Logs Error 예외 처리:", e);
+
+        // B. 활성화된 탭 및 슬라이더 이동 연산 비즈니스 로직
+        function updateLogSlider() {
+            const isBlog = (currentMode === 'blog');
+            const activeContainer = isBlog ? blogContainer : quizContainer;
+            const targetPage = isBlog ? blogPage : quizPage;
+            const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
+            const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
+
+            // 타겟 컨테이너 가시성 스위칭
+            if(isBlog) {
+                blogContainer.classList.remove("hidden");
+                quizContainer.classList.add("hidden");
+            } else {
+                quizContainer.classList.remove("hidden");
+                blogContainer.classList.add("hidden");
+            }
+
+            // 슬라이드 트랜스폼 연산
+            if (activeContainer) {
+                activeContainer.style.transform = `translateX(-${targetPage * 100}%)`;
+            }
+
+            // 인디케이터 라벨 동기화
+            const text = `Page ${targetPage + 1} / ${totalPages}`;
+            if (logIndicator) logIndicator.innerText = text;
+            if (logIndicatorMobile) logIndicatorMobile.innerText = text;
+        }
+
+        // C. 탭 스위칭 클릭 핸들러
+        function switchTab(mode) {
+            currentMode = mode;
+            if (mode === 'blog') {
+                tabBlogBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
+                tabQuizBtn.className = "tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5";
+            } else {
+                tabQuizBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-emerald-400 border-t-2 border-t-emerald-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
+                tabBlogBtn.className = "tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5";
+            }
+            updateLogSlider();
+        }
+
+        tabBlogBtn?.addEventListener("click", () => switchTab('blog'));
+        tabQuizBtn?.addEventListener("click", () => switchTab('quiz'));
+
+        // D. 공용 네비게이션 트리거 결합
+        const navigate = (direction) => {
+            const isBlog = (currentMode === 'blog');
+            const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
+            const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
+            
+            if (isBlog) {
+                blogPage = (blogPage + direction + totalPages) % totalPages;
+            } else {
+                quizPage = (quizPage + direction + totalPages) % totalPages;
+            }
+            updateLogSlider();
+        };
+
+        document.getElementById("log-prev")?.addEventListener("click", () => navigate(-1));
+        document.getElementById("log-next")?.addEventListener("click", () => navigate(1));
+        document.getElementById("log-prev-mobile")?.addEventListener("click", () => navigate(-1));
+        document.getElementById("log-next-mobile")?.addEventListener("click", () => navigate(1));
+
+        // 최초 구동 시동
+        initLogs();
+
+    } catch (err) {
+        console.error("통합 로그 슬라이더 컴파일 에러: ", err);
     }
+
+    // ==========================================
+    // 💡 4. 퀴즈 상세 모달 인터랙션 제어 모듈
+    // ==========================================
+    const quizModal = document.getElementById("quiz-modal");
+    const quizModalContent = document.getElementById("quiz-modal-content");
+    const quizModalCloseBtn = document.getElementById("quiz-modal-close");
+    const quizModalChapter = document.getElementById("quiz-modal-chapter");
+    const quizModalTitle = document.getElementById("quiz-modal-title");
+    const quizModalBody = document.getElementById("quiz-modal-body");
+
+    window.openQuizModal = function(quizId) {
+        if (!DATA.quizzes) return;
+        const quiz = DATA.quizzes.find(q => q.id === quizId);
+        if (!quiz) return;
+
+        if (quizModalChapter) quizModalChapter.innerText = quiz.chapter;
+        if (quizModalTitle) quizModalTitle.innerText = quiz.title;
+        if (quizModalBody) quizModalBody.innerHTML = quiz.content;
+
+        if (quizModal) {
+            quizModal.classList.remove("hidden");
+            void quizModal.offsetWidth; // Force Reflow
+            quizModal.classList.remove("opacity-0", "pointer-events-none");
+            quizModal.classList.add("flex");
+            if (quizModalContent) quizModalContent.classList.replace("scale-95", "scale-100");
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    window.closeQuizModal = function() {
+        if (quizModal) {
+            quizModal.classList.add("opacity-0", "pointer-events-none");
+            if (quizModalContent) quizModalContent.classList.replace("scale-100", "scale-95");
+            setTimeout(() => {
+                quizModal.classList.add("hidden");
+                quizModal.classList.remove("flex");
+                document.body.style.overflow = "";
+                if (quizModalBody) quizModalBody.innerHTML = "";
+            }, 300);
+        }
+    };
+
+    quizModalCloseBtn?.addEventListener("click", window.closeQuizModal);
+    quizModal?.addEventListener("click", (e) => { if (e.target === quizModal) window.closeQuizModal(); });
+});
 
     // ==========================================
     // 4. 미니 앨범 (Gallery 모달)
