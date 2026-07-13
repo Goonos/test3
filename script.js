@@ -477,9 +477,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
         console.error("통합 로그 슬라이더 컴파일 에러: ", err);
     }
-
-    // ==========================================
-    // 💡 4. 퀴즈 상세 모달 인터랙션 제어
+// ==========================================
+    // 💡 4. 퀴즈 상세 모달 인터랙션 제어 모듈 (자동화 버전)
     // ==========================================
     const quizModal = document.getElementById("quiz-modal");
     const quizModalContent = document.getElementById("quiz-modal-content");
@@ -488,22 +487,123 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizModalTitle = document.getElementById("quiz-modal-title");
     const quizModalBody = document.getElementById("quiz-modal-body");
 
-    window.openQuizModal = function(quizId) {
+    window.openQuizModal = async function(quizId) {
         if (!DATA.quizzes) return;
         const quiz = DATA.quizzes.find(q => q.id === quizId);
         if (!quiz) return;
 
+        // 1. 헤더 정보 세팅
         if (quizModalChapter) quizModalChapter.innerText = quiz.chapter;
         if (quizModalTitle) quizModalTitle.innerText = quiz.title;
-        if (quizModalBody) quizModalBody.innerHTML = quiz.content;
+        
+        // 2. 로딩 스피너 표시 (Github에서 파일 읽어오는 동안)
+        if (quizModalBody) {
+            quizModalBody.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-40 text-gray-400">
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2 text-emerald-500"></i>
+                    <p class="text-xs">Github에서 문제 데이터를 불러오는 중입니다...</p>
+                </div>
+            `;
+        }
 
+        // 3. 모달 띄우기 애니메이션
         if (quizModal) {
             quizModal.classList.remove("hidden");
-            void quizModal.offsetWidth; 
+            void quizModal.offsetWidth; // Force Reflow
             quizModal.classList.remove("opacity-0", "pointer-events-none");
             quizModal.classList.add("flex");
             if (quizModalContent) quizModalContent.classList.replace("scale-95", "scale-100");
             document.body.style.overflow = "hidden";
+        }
+
+        // 4. 마크다운 Fetch 및 HTML 자동 생성 렌더링
+        try {
+            const response = await fetch(quiz.mdRawUrl);
+            if (!response.ok) throw new Error("데이터를 불러오지 못했습니다.");
+            const mdText = await response.text();
+
+            // 공통 환경 가이드 박스
+            let htmlContent = `
+                <div class="space-y-6">
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-gray-400">
+                        <strong>🛠️ 실습 환경 가이드</strong><br>
+                        - DB버전: Oracle Database 19c / 사용 스키마: HR (Human Resources)<br>
+                        - 각 문항 하단의 <span class="text-emerald-400 font-bold">[🔗 정답 SQL 보기]</span> 단추를 클릭하면 원격 저장소에 아카이빙된 검증 스크립트로 즉시 연결됩니다.
+                    </div>
+                    <div class="space-y-4 border-l border-gray-800 pl-4 ml-1">
+            `;
+
+            // 1️⃣ '---' 구분선을 기준으로 마크다운을 문제 단위(덩어리)로 쪼갭니다.
+            const problems = mdText.split('---');
+
+            problems.forEach(problem => {
+                const text = problem.trim();
+                if (!text) return; // 빈 텍스트면 건너뜀
+
+                // 2️⃣ 정규식으로 "[1번] 문제내용" 추출
+                // 매칭: [숫자번] 그 뒤의 모든 텍스트(줄바꿈 전까지)
+                const titleMatch = text.match(/\[(\d+)번\]\s*([^\n]+)/);
+                if (!titleMatch) return;
+
+                const qNum = titleMatch[1]; // "1"
+                const qText = titleMatch[2].trim(); // "EMPLOYEES 테이블에서..."
+
+                // 3️⃣ 정규식으로 예상 결과값(코드 블록) 추출
+                // 매칭: ``` 와 ``` 사이의 모든 내용
+                const codeMatch = text.match(/```([\s\S]*?)```/);
+                const codeContent = codeMatch ? codeMatch[1].trim() : '';
+
+                // 파일번호 두 자리 맞추기 (1 -> 01)
+                const paddedNum = String(qNum).padStart(2, '0');
+                const fileName = `${quiz.prefix}_${paddedNum}.sql`;
+                const fileUrl = `${quiz.githubBaseUrl}/${fileName}`;
+
+                // 4️⃣ HTML 블록 조립 (코드 블록이 있으면 결과 창도 함께 렌더링)
+                htmlContent += `
+                    <div class="pb-5 border-b border-gray-800/50">
+                        <h4 class="text-white font-bold mb-3 text-sm md:text-base leading-relaxed">[${qNum}번] ${qText}</h4>
+                        
+                        ${codeContent ? `
+                        <div class="bg-gray-950/80 rounded-lg p-3 md:p-4 mb-4 border border-gray-800 overflow-x-auto scrollbar-hide">
+                            <span class="block text-[10px] text-gray-500 font-mono mb-2">💡 예상 실행 결과</span>
+                            <pre class="text-[10px] md:text-xs text-gray-300 font-mono whitespace-pre"><code class="language-sql">${codeContent}</code></pre>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-gray-500 text-xs font-mono">파일명: ${fileName}</span>
+                            <a href="${fileUrl}" target="_blank" class="px-2.5 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded-md hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all flex items-center gap-1.5">
+                                <i class="fab fa-github"></i> 정답 SQL 보기 ↗
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            htmlContent += `</div></div>`; // 닫는 태그
+
+            // 생성된 HTML 삽입
+            if (quizModalBody) {
+                quizModalBody.innerHTML = htmlContent;
+                // 코드 블록이 추가되었으니 구문 강조(Highlight.js)를 다시 적용합니다.
+                if (typeof hljs !== 'undefined') {
+                    quizModalBody.querySelectorAll('pre code').forEach((block) => {
+                        hljs.highlightElement(block);
+                    });
+                }
+            }
+
+        } catch (error) {
+            console.error(error);
+            if (quizModalBody) {
+                quizModalBody.innerHTML = `
+                    <div class="text-red-400 text-center py-10 bg-red-500/10 rounded-lg border border-red-500/20">
+                        <i class="fas fa-exclamation-triangle mb-2 text-xl"></i><br>
+                        문제 데이터를 불러오는 데 실패했습니다.<br>
+                        <span class="text-xs text-gray-500">Github 경로(${quiz.mdRawUrl})를 확인해 주세요.</span>
+                    </div>
+                `;
+            }
         }
     };
 
