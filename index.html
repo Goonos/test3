@@ -241,36 +241,71 @@
         </section>
 
         <section id="blog" class="py-16 md:py-20 px-5 md:px-6 max-w-5xl mx-auto border-t border-gray-800">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-10">
-                <div class="text-center md:text-left">
-                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-white"><i class="fas fa-book text-blue-500 mr-2"></i> Daily Study Log</h2>
-                    <p class="text-gray-400 text-xs md:text-sm">매일 블로그에 꾸준히 기록하고 학습한 흔적들의 아카이브입니다.</p>
-                </div>
-                <div class="hidden md:flex items-center gap-3 shrink-0">
-                    <span id="blog-indicator" class="text-xs font-mono text-gray-500">Page 1 / 1</span>
-                    <div class="flex gap-1.5">
-                        <button id="blog-prev" class="bg-gray-800 hover:bg-gray-700 text-white w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 transition cursor-pointer">
-                            <i class="fas fa-chevron-left text-xs"></i>
-                        </button>
-                        <button id="blog-next" class="bg-gray-800 hover:bg-gray-700 text-white w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 transition cursor-pointer">
-                            <i class="fas fa-chevron-right text-xs"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex md:hidden justify-center items-center gap-4 mb-6">
-                <button id="blog-prev-mobile" class="bg-gray-800 hover:bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center border border-gray-700 transition">
-                    <i class="fas fa-chevron-left text-sm"></i>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+        <div class="text-center md:text-left">
+            <h2 class="text-xl md:text-2xl font-bold mb-2 text-white"><i class="fas fa-archive text-blue-500 mr-2"></i> Study & Quiz Log</h2>
+            <p class="text-gray-400 text-xs md:text-sm">매일 기록하는 스터디 로그와 오라클 퀴즈 문제풀이 아카이브입니다.</p>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-3 shrink-0">
+            <span id="log-indicator" class="text-xs font-mono text-gray-500">Page 1 / 1</span>
+            <div class="flex gap-1.5">
+                <button id="log-prev" class="bg-gray-800 hover:bg-gray-700 text-white w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 transition cursor-pointer">
+                    <i class="fas fa-chevron-left text-xs"></i>
                 </button>
-                <span id="blog-indicator-mobile" class="text-xs font-mono text-gray-400">Page 1 / 1</span>
-                <button id="blog-next-mobile" class="bg-gray-800 hover:bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center border border-gray-700 transition">
-                    <i class="fas fa-chevron-right text-sm"></i>
+                <button id="log-next" class="bg-gray-800 hover:bg-gray-700 text-white w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 transition cursor-pointer">
+                    <i class="fas fa-chevron-right text-xs"></i>
                 </button>
             </div>
-            <div class="overflow-hidden w-full">
-                <div id="blog-container" class="flex transition-transform duration-500 ease-in-out"></div>
+        </div>
+    </div>
+
+    <div class="flex border-b border-gray-800 gap-1 mb-6 font-mono text-xs md:text-sm">
+        <button id="tab-blog" class="tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-blog"></i> Daily Log
+        </button>
+        <button id="tab-quiz" class="tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-vial"></i> Quiz Archive
+        </button>
+    </div>
+
+    <div class="flex md:hidden justify-center items-center gap-4 mb-6">
+        <button id="log-prev-mobile" class="bg-gray-800 hover:bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center border border-gray-700 transition">
+            <i class="fas fa-chevron-left text-sm"></i>
+        </button>
+        <span id="log-indicator-mobile" class="text-xs font-mono text-gray-400">Page 1 / 1</span>
+        <button id="log-next-mobile" class="bg-gray-800 hover:bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center border border-gray-700 transition">
+            <i class="fas fa-chevron-right text-sm"></i>
+        </button>
+    </div>
+
+    <div class="overflow-hidden w-full relative">
+        <div id="blog-container" class="flex transition-transform duration-500 ease-in-out w-full"></div>
+        
+        <div id="quiz-container" class="flex transition-transform duration-500 ease-in-out w-full hidden"></div>
+    </div>
+</section>
+
+<div id="quiz-modal" class="fixed inset-0 bg-black/85 z-[110] hidden items-center justify-center p-4 md:p-8 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="quiz-modal-content" class="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300">
+        <div class="px-5 md:px-6 py-4 md:py-5 border-b border-gray-800 flex justify-between items-center bg-gray-900/90 backdrop-blur-md rounded-t-2xl sticky top-0 z-10">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <i class="fas fa-file-code text-emerald-400 text-lg"></i>
+                </div>
+                <div>
+                    <span id="quiz-modal-chapter" class="text-[10px] md:text-xs font-mono text-emerald-400 block font-bold">CHAPTER 03</span>
+                    <h3 id="quiz-modal-title" class="text-base md:text-lg font-bold text-white line-clamp-1">퀴즈 타이틀</h3>
+                </div>
             </div>
-        </section>
+            <button id="quiz-modal-close" class="text-gray-400 hover:text-white text-xl p-2 transition cursor-pointer rounded-lg hover:bg-gray-800 flex items-center justify-center shrink-0">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="quiz-modal-body" class="p-5 md:p-8 flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-900 [&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-600 text-gray-300 text-xs md:text-sm leading-relaxed">
+            </div>
+    </div>
+</div>
 
         <footer class="py-8 text-center text-[10px] md:text-xs text-gray-600 border-t border-gray-800">
             <p>© 2026 권오승. Powered by Pure HTML/CSS/JS & GitHub Pages.</p>
