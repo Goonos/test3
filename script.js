@@ -617,31 +617,55 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // 이미 열려있다면 닫아줍니다 (토글 기능)
+        // 이미 열려있다면 토글 닫기
         if (!container.classList.contains("hidden")) {
             container.classList.add("hidden");
             return;
         }
 
-        // 박스 오픈
         container.classList.remove("hidden");
         const codeElement = container.querySelector("code");
 
-        // 만약 최초 1회 로딩 전 상태("로딩 중...")라면 비동기로 실제 파일 내용을 긁어옵니다.
         if (codeElement && codeElement.innerText === "로딩 중...") {
             try {
+                // 1️⃣ 외부 SQL 포맷터 라이브러리가 없다면 동적으로 먼저 로드합니다.
+                if (typeof sqlFormatter === 'undefined') {
+                    await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://cdn.jsdelivr.net/npm/sql-formatter@15.4.5/dist/sql-formatter.min.js';
+                        script.onload = resolve;
+                        script.onerror = reject;
+                        document.head.appendChild(script);
+                    });
+                }
+
+                // 2️⃣ Github에서 순수 SQL 소스코드 fetch
                 const res = await fetch(fileUrl);
                 if (!res.ok) throw new Error("코드를 가져오지 못했습니다.");
-                const sqlCode = await res.text();
+                let sqlCode = await res.text();
                 
-                codeElement.innerText = sqlCode.trim();
+                sqlCode = sqlCode.trim();
 
-                // 새로 주입된 정답 코드 블록에 하이라이트(Highlight.js) 입히기
+                // 3️⃣ [요구사항 1] 끝에 붙은 '/' 기호를 오라클 표준 ';' 기호로 자동 치환
+                // 줄바꿈이나 공백 뒤에 단독으로 있는 / 를 ; 로 바꿉니다.
+                sqlCode = sqlCode.replace(/(\s|^)\/(\s|$)/g, '$1;$2');
+
+                // 4️⃣ [요구사항 2] sql-formatter를 활용해 주요 절(SELECT, FROM, WHERE 등) 기준으로 정렬 및 들여쓰기
+                const formattedSql = sqlFormatter.format(sqlCode, {
+                    language: 'plsql', // 오라클 환경에 맞춘 dialect 설정
+                    tabWidth: 4,       // 들여쓰기 너비
+                    keywordCase: 'upper' // 예약어는 깔끔하게 대문자로 통일
+                });
+                
+                codeElement.innerText = formattedSql;
+
+                // 5️⃣ 정렬된 코드 블록에 Highlight.js 구문 강조 입히기
                 if (typeof hljs !== 'undefined') {
                     hljs.highlightElement(codeElement);
                 }
             } catch (err) {
-                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러올 수 없습니다.\n-- 경로를 확인하세요: ${fileUrl}`;
+                console.error(err);
+                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 경로: ${fileUrl}`;
             }
         }
     };
