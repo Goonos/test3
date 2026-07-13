@@ -533,8 +533,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="space-y-4 border-l border-gray-800 pl-4 ml-1">
             `;
 
-            // 1️⃣ '---' 구분선을 기준으로 마크다운을 문제 단위(덩어리)로 쪼갭니다.
-            const problems = mdText.split('---');
+            // 1️⃣ [버그 수정 핵심] 오라클 테이블 구분선(-----------) 내부에 포함된 대시 문자에 반응하지 않도록,
+            // 한 라인 전체가 오직 '---'로만 이루어진 마크다운 수평선만 정확히 골라내어 문제를 쪼갭니다.
+            const problems = mdText.split(/^\s*---\s*$/m);
 
             problems.forEach(problem => {
                 const text = problem.trim();
@@ -551,7 +552,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const codeContent = codeMatch ? codeMatch[1].trim() : '';
 
                 // 4️⃣ [숫자번] 태그와 코드 블록을 제외한 순수 "문제 내용 전체"를 추출합니다.
-                // 코드 블록이 시작되기 전까지의 줄바꿈과 공백을 모두 포함하여 온전히 가져옵니다.
                 let qText = '';
                 if (codeMatch) {
                     // 코드 블록이 있는 경우: [숫자번] 뒤부터 ``` 시작 전까지 전부 가져옴
