@@ -540,25 +540,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 const text = problem.trim();
                 if (!text) return; // 빈 텍스트면 건너뜀
 
-                // 2️⃣ 정규식으로 "[1번] 문제내용" 추출
-                // 매칭: [숫자번] 그 뒤의 모든 텍스트(줄바꿈 전까지)
-                const titleMatch = text.match(/\[(\d+)번\]\s*([^\n]+)/);
-                if (!titleMatch) return;
+                // 2️⃣ [숫자번] 패턴을 찾아냅니다.
+                const numMatch = text.match(/\[(\d+)번\]/);
+                if (!numMatch) return;
 
-                const qNum = titleMatch[1]; // "1"
-                const qText = titleMatch[2].trim(); // "EMPLOYEES 테이블에서..."
+                const qNum = numMatch[1]; // "1"
 
-                // 3️⃣ 정규식으로 예상 결과값(코드 블록) 추출
-                // 매칭: ``` 와 ``` 사이의 모든 내용
+                // 3️⃣ 백틱(```) 코드 블록을 추출합니다.
                 const codeMatch = text.match(/```([\s\S]*?)```/);
                 const codeContent = codeMatch ? codeMatch[1].trim() : '';
+
+                // 4️⃣ [숫자번] 태그와 코드 블록을 제외한 순수 "문제 내용 전체"를 추출합니다.
+                // 코드 블록이 시작되기 전까지의 줄바꿈과 공백을 모두 포함하여 온전히 가져옵니다.
+                let qText = '';
+                if (codeMatch) {
+                    // 코드 블록이 있는 경우: [숫자번] 뒤부터 ``` 시작 전까지 전부 가져옴
+                    const treatText = text.split('```')[0];
+                    qText = treatText.replace(/\[\d+번\]\s*/, '').trim();
+                } else {
+                    // 코드 블록이 없는 경우: [숫자번] 뒤의 전체 텍스트
+                    qText = text.replace(/\[\d+번\]\s*/, '').trim();
+                }
+
+                // 줄바꿈 문자(\n)를 HTML 브레이크 태그(<br>)로 변경하여 화면 짤림 방지
+                qText = qText.replace(/\n/g, '<br>');
 
                 // 파일번호 두 자리 맞추기 (1 -> 01)
                 const paddedNum = String(qNum).padStart(2, '0');
                 const fileName = `${quiz.prefix}_${paddedNum}.sql`;
                 const fileUrl = `${quiz.githubBaseUrl}/${fileName}`;
 
-                // 4️⃣ HTML 블록 조립 (코드 블록이 있으면 결과 창도 함께 렌더링)
+                // 5️⃣ HTML 블록 조립
                 htmlContent += `
                     <div class="pb-5 border-b border-gray-800/50">
                         <h4 class="text-white font-bold mb-3 text-sm md:text-base leading-relaxed">[${qNum}번] ${qText}</h4>
