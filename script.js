@@ -612,7 +612,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // 🚀 [요구사항 2 핵심 함수] 버튼을 누르면 인라인으로 코드를 비동기 래칭하고 온/오프 토글합니다.
+    적용하신 라이브러리(sql-formatter)의 특징 때문에 발생한 문제입니다!
+
+이전 코드에서 언어 설정을 오라클 전용인 language: 'plsql'로 맞췄는데, 이 라이브러리의 plsql 파서는 기본적으로 BEGIN ... END 같은 프로시저(절차적) 블록에 최적화되어 있어서 단순한 SELECT 문을 만나면 줄바꿈을 무시하고 한 줄로 길게 늘어뜨리는 버그(특성)가 있습니다.
+
+이 현상을 해결하기 위해 파서를 가장 엄격하게 줄바꿈을 지키는 표준 'sql'로 변경하고, AND나 OR 같은 논리 연산자도 무조건 줄을 바꾼 뒤 들여쓰기를 하도록 옵션을 추가했습니다. 또한 / 기호가 확실하게 ;로 치환되도록 정규식도 강화했습니다.
+
+script.js 파일에서 window.toggleAnswerCode 함수 전체를 아래 코드로 교체해 주세요.
+
+🛠️ 완벽한 줄바꿈/들여쓰기가 적용된 toggleAnswerCode
+JavaScript
+    // 🚀 [최종 업그레이드] 정답 코드 실시간 로드 및 완벽한 포맷팅 엔진
     window.toggleAnswerCode = async function(fileUrl, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -628,13 +638,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (codeElement && codeElement.innerText === "로딩 중...") {
             try {
-                // 1️⃣ 외부 SQL 포맷터 라이브러리가 없다면 동적으로 먼저 로드합니다.
-                if (typeof sqlFormatter === 'undefined') {
+                // 1️⃣ 외부 SQL 포맷터 로드 (CDN)
+                if (typeof window.sqlFormatter === 'undefined') {
                     await new Promise((resolve, reject) => {
                         const script = document.createElement('script');
                         script.src = 'https://cdn.jsdelivr.net/npm/sql-formatter@15.4.5/dist/sql-formatter.min.js';
-                        script.onload = resolve;
-                        script.onerror = reject;
+                        script.onload = () => resolve();
+                        script.onerror = () => reject();
                         document.head.appendChild(script);
                     });
                 }
@@ -644,20 +654,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!res.ok) throw new Error("코드를 가져오지 못했습니다.");
                 let sqlCode = await res.text();
                 
-                sqlCode = sqlCode.trim();
+                // 3️⃣ [요구사항 1] 환경 특성상 들어간 '/' 기호를 표준 ';' 로 완벽 치환
+                // 코드 사이에 섞여있지 않고 단독으로 쓰인 '/' 기호만 정확히 찾아 세미콜론으로 바꿉니다.
+                sqlCode = sqlCode.replace(/(^|\s)\/(\s|$)/g, '$1;$2');
 
-                // 3️⃣ [요구사항 1] 끝에 붙은 '/' 기호를 오라클 표준 ';' 기호로 자동 치환
-                // 줄바꿈이나 공백 뒤에 단독으로 있는 / 를 ; 로 바꿉니다.
-                sqlCode = sqlCode.replace(/(\s|^)\/(\s|$)/g, '$1;$2');
-
-                // 4️⃣ [요구사항 2] sql-formatter를 활용해 주요 절(SELECT, FROM, WHERE 등) 기준으로 정렬 및 들여쓰기
-                const formattedSql = sqlFormatter.format(sqlCode, {
-                    language: 'plsql', // 오라클 환경에 맞춘 dialect 설정
-                    tabWidth: 4,       // 들여쓰기 너비
-                    keywordCase: 'upper' // 예약어는 깔끔하게 대문자로 통일
+                // 4️⃣ [요구사항 2] 구문 절 기준 줄바꿈 및 포맷팅 (문제 해결 핵심!)
+                const formattedSql = window.sqlFormatter.format(sqlCode, {
+                    language: 'sql',                 // 💡 plsql 대신 표준 sql 파서를 사용하여 SELECT, FROM, WHERE 줄바꿈 강제
+                    tabWidth: 4,                     // 들여쓰기 4칸 적용
+                    keywordCase: 'upper',            // 예약어는 대문자로 깔끔하게 통일
+                    logicalOperatorNewline: 'before' // 💡 AND, OR 등의 논리 연산자도 무조건 새 줄로 내린 후 들여쓰기
                 });
                 
-                codeElement.innerText = formattedSql;
+                codeElement.innerText = formattedSql.trim();
 
                 // 5️⃣ 정렬된 코드 블록에 Highlight.js 구문 강조 입히기
                 if (typeof hljs !== 'undefined') {
@@ -665,7 +674,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (err) {
                 console.error(err);
-                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 경로: ${fileUrl}`;
+                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
             }
         }
     };
