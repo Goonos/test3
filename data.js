@@ -217,12 +217,14 @@ const DATA = {
             summary: "HR 스키마 기준 WHERE 절 필터링, 논리 연산자 조율, ORDER BY 정렬 순서 우선순위 및 FETCH FIRST 명령어 응용력을 검증하는 종합 문제 풀이 백서입니다.",
             date: "2026-07-13",
             tags: ["Oracle", "WHERE", "ORDER BY"],
-            // 🤖 자동화 파싱을 위한 메타데이터
-            mdFile: "quizzes/ch03.md", // 읽어올 깃허브 마크다운 파일 경로
-            prefix: "ch03", // sql 파일명 생성용 접두사 (ch03_01.sql 형태)
-            githubBase: "https://github.com/본인아이디/kos_oracle/blob/main/quizzes/answers" // 정답 파일이 있는 깃허브 폴더 주소
+            
+            // 🤖 자동화를 위한 설정값 (여기가 핵심!)
+            // 본인 아이디를 반드시 알맞게 수정하세요!
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch03.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch03" 
         }
-        // 앞으로 ch04가 생기면 똑같이 이 블록만 추가하면 끝입니다!
+        // 향후 ch04가 생기면 위 형식 그대로 복붙 후 숫자만 4로 바꾸면 끝입니다.
     ]
 };
 
