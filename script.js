@@ -626,7 +626,8 @@ document.addEventListener("DOMContentLoaded", () => {
         container.classList.remove("hidden");
         const codeElement = container.querySelector("code");
 
-        if (codeElement && codeElement.innerText === "로딩 중...") {
+        // innerText 대신 textContent를 사용하여 줄바꿈(\n)이 무시되는 현상 방지
+        if (codeElement && codeElement.textContent.trim() === "로딩 중...") {
             try {
                 // 1️⃣ 외부 SQL 포맷터 로드 (CDN)
                 if (typeof window.sqlFormatter === 'undefined') {
@@ -644,27 +645,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!res.ok) throw new Error("코드를 가져오지 못했습니다.");
                 let sqlCode = await res.text();
                 
-                // 3️⃣ [요구사항 1] 환경 특성상 들어간 '/' 기호를 표준 ';' 로 완벽 치환
-                // 코드 사이에 섞여있지 않고 단독으로 쓰인 '/' 기호만 정확히 찾아 세미콜론으로 바꿉니다.
+                // 3️⃣ [치명적 버그 해결] 줄바꿈 기호(\n)가 증발하면서 department_idFROM 처럼 단어가 붙어버리는 현상 방지
+                // 모든 줄바꿈 기호 앞뒤에 강제로 공백(스페이스)을 하나씩 넣어 단어를 완벽히 띄워줍니다.
+                sqlCode = sqlCode.replace(/\n/g, ' \n ');
+
+                // 4️⃣ 오라클 환경 특성상 들어간 '/' 기호를 표준 ';' 로 완벽 치환
                 sqlCode = sqlCode.replace(/(^|\s)\/(\s|$)/g, '$1;$2');
 
-                // 4️⃣ [요구사항 2] 구문 절 기준 줄바꿈 및 포맷팅 (문제 해결 핵심!)
+                // 5️⃣ 구문 절 기준 줄바꿈 및 포맷팅 수행
                 const formattedSql = window.sqlFormatter.format(sqlCode, {
-                    language: 'sql',                 // 💡 plsql 대신 표준 sql 파서를 사용하여 SELECT, FROM, WHERE 줄바꿈 강제
-                    tabWidth: 4,                     // 들여쓰기 4칸 적용
-                    keywordCase: 'upper',            // 예약어는 대문자로 깔끔하게 통일
-                    logicalOperatorNewline: 'before' // 💡 AND, OR 등의 논리 연산자도 무조건 새 줄로 내린 후 들여쓰기
+                    language: 'sql',                 // 표준 SQL 파서를 사용하여 SELECT, FROM, WHERE 줄바꿈 강제 적용
+                    tabWidth: 4,                     // 들여쓰기 4칸
+                    keywordCase: 'upper',            // 예약어는 대문자로 깔끔하게
+                    linesBetweenQueries: 1,          // 쿼리 간격 강제 유지
+                    logicalOperatorNewline: 'before' // AND, OR 등의 논리 연산자도 무조건 새 줄로
                 });
                 
-                codeElement.innerText = formattedSql.trim();
+                // 6️⃣ innerText가 아닌 textContent를 주입해야 브라우저가 포맷팅된 줄바꿈을 그대로 화면에 그립니다.
+                codeElement.textContent = formattedSql.trim();
 
-                // 5️⃣ 정렬된 코드 블록에 Highlight.js 구문 강조 입히기
+                // 7️⃣ 정렬된 코드 블록에 Highlight.js 구문 강조 다시 입히기
                 if (typeof hljs !== 'undefined') {
+                    codeElement.className = "language-sql"; // 클래스 초기화 방지
                     hljs.highlightElement(codeElement);
                 }
             } catch (err) {
                 console.error(err);
-                codeElement.innerText = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
+                codeElement.textContent = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
             }
         }
     };
