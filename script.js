@@ -673,7 +673,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (err) {
                 console.error(err);
-                codeElement.textContent = `-- ❌ 에러: 작성 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
+                codeElement.textContent = `-- ❌ 에러:작성된 스크립트가 존재하지 않거나, 스크립트를 불러오는데 실패했습니다.\n`;
             }
         }
     };
