@@ -217,6 +217,12 @@ const DATA = {
             summary: "단일행 함수 문자, 중첩 함수, 숫자함수, 날짜산술",
             date: "2026-07-14",
             tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경(Ch.02)</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
             
             // 🤖 자동화를 위한 설정값 (여기가 핵심!)
             // 본인 아이디를 반드시 알맞게 수정하세요!
@@ -231,6 +237,12 @@ const DATA = {
             summary: "WHERE 절, 비교 연산자, BETWEEN/IN/LIKE/IS NULL, AND/OR/NOT, 연산자 우선순위, ORDER BY, FETCH FIRST, 대체 변수",
             date: "2026-07-13",
             tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경 (Ch.01)</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
             
             // 🤖 자동화를 위한 설정값 (여기가 핵심!)
             // 본인 아이디를 반드시 알맞게 수정하세요!
