@@ -211,6 +211,57 @@ const DATA = {
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
         {
+            id: "quiz-ch07",
+            chapter: "CHAPTER 05",
+            title: "JOIN(다중 테이블 조회) 실습 문제 (30문항)",
+            summary: "Natural Join, USING 절, ON 절, Self-Join, Nonequijoin, LEFT/RIGHT/FULL OUTER JOIN, CROSS JOIN, 3방향 조인",
+            date: "2026-07-20",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch07.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch07" 
+        },
+        {
+            id: "quiz-ch06",
+            chapter: "CHAPTER 04",
+            title: "그룹 함수 실습 문제 (30문항)",
+            summary: "산술연산(SUM,AVG), Group by, Having",
+            date: "2026-07-16",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch06.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch06" 
+        },
+        {
+            id: "quiz-ch05",
+            chapter: "CHAPTER 03",
+            title: "변환 함수와 조건식 실습 문제 (30문항)",
+            summary: "형변환, NULL연산, CASE, DECODE",
+            date: "2026-07-15",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch05.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch05" 
+        },
+        {
             id: "quiz-ch04",
             chapter: "CHAPTER 02",
             title: "단일행 함수 실습 문제 (30문항)",
@@ -223,9 +274,6 @@ const DATA = {
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
                 - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
-            
-            // 🤖 자동화를 위한 설정값 (여기가 핵심!)
-            // 본인 아이디를 반드시 알맞게 수정하세요!
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch04.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
             prefix: "ch04" 
@@ -243,14 +291,10 @@ const DATA = {
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
                 - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
-            
-            // 🤖 자동화를 위한 설정값 (여기가 핵심!)
-            // 본인 아이디를 반드시 알맞게 수정하세요!
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch03.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
             prefix: "ch03" 
         }
-        // 향후 ch04가 생기면 위 형식 그대로 복붙 후 숫자만 4로 바꾸면 끝입니다.
     ]
 };
 
