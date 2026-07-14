@@ -581,12 +581,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="flex flex-col gap-3 mt-2">
                             <div class="flex justify-end items-center">
                                 <button onclick="toggleAnswerCode('${rawFileUrl}', 'ans-${quizId}-${qNum}')" class="px-2.5 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium rounded-md hover:bg-emerald-500/20 hover:border-emerald-500/40 cursor-pointer transition-all flex items-center gap-1.5">
-                                    <i class="fas fa-code"></i> 정답 SQL 보기 <i class="fas fa-chevron-down text-[10px] ml-0.5"></i>
+                                    <i class="fas fa-code"></i> 작성 SQL 보기 <i class="fas fa-chevron-down text-[10px] ml-0.5"></i>
                                 </button>
                             </div>
                             
                             <div id="ans-${quizId}-${qNum}" class="hidden w-full bg-slate-900/90 border border-slate-800 rounded-lg p-3 md:p-4 overflow-x-auto scrollbar-hide">
-                                <span class="block text-xs md:text-sm font-semibold tracking-wide text-emerald-400 font-sans mb-2.5">📝 정답 SQL 스크립트</span>
+                                <span class="block text-xs md:text-sm font-semibold tracking-wide text-emerald-400 font-sans mb-2.5">📝 작성 SQL 스크립트</span>
                                 <pre class="text-[10px] md:text-xs text-emerald-300 font-mono whitespace-pre"><code class="language-sql">로딩 중...</code></pre>
                             </div>
                         </div>
@@ -614,7 +614,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // 🚀 [최종 업그레이드] 정답 코드 실시간 로드 및 완벽한 포맷팅 엔진
+    // 🚀 [최종 업그레이드] 작성 코드 실시간 로드 및 완벽한 포맷팅 엔진
     window.toggleAnswerCode = async function(fileUrl, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -673,7 +673,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (err) {
                 console.error(err);
-                codeElement.textContent = `-- ❌ 에러: 정답 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
+                codeElement.textContent = `-- ❌ 에러: 작성 스크립트를 불러오거나 정렬하는 데 실패했습니다.\n-- 원문 경로: ${fileUrl}`;
             }
         }
     };
