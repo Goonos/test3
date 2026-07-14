@@ -221,7 +221,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[</> 작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             
             // 🤖 자동화를 위한 설정값 (여기가 핵심!)
@@ -241,7 +241,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[</> 작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             
             // 🤖 자동화를 위한 설정값 (여기가 핵심!)
