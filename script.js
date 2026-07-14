@@ -518,13 +518,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) throw new Error("데이터를 불러오지 못했습니다.");
             const mdText = await response.text();
 
+            const guideBox = quiz.guideHTML ? `
+                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-gray-400 leading-relaxed">
+                    ${quiz.guideHTML}
+                </div>
+            ` : '';
+
+            // 🌟 2. htmlContent 조립 시 guideBox 변수를 쏙 집어넣습니다.
             let htmlContent = `
                 <div class="space-y-6">
-                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-gray-400">
-                        <strong>🛠️ 실습 환경 가이드</strong><br>
-                        - DB버전: Oracle Database 19c / 사용 스키마: HR (Human Resources)<br>
-                        - 각 문항 하단의 <span class="text-emerald-400 font-bold">[👁️ 정답 SQL 보기]</span> 단추를 클릭하면 원격 저장소의 검증 스크립트를 화면에 즉시 펼쳐줍니다.
-                    </div>
+                    ${guideBox}
                     <div class="space-y-4 border-l border-gray-800 pl-4 ml-1">
             `;
 
