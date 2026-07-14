@@ -91,17 +91,24 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-14",
+            title: "16회차 - 오라클 SQL NULL연산(NVL,NVL2)CASE,산술연산, Group by,Having, Join",
+            summary: "오라클 SQL의 NVL, NVL2 함수 및 CASE 문을 활용한 데이터의 조건별 NULL 처리와 산술 연산을 수행하였으며, GROUP BY와 HAVING 절 기반의 대용량 데이터 그룹화 및 조건 필터링, 그리고 여러 테이블을 유기적으로 연결하는 다중 JOIN 문을 직접 작성하며 관계형 데이터베이스 집계 및 다차원 데이터 정제 과정을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224346555056"
+        },
+       {
             date: "2026-07-13",
             title: "15회차 - 오라클 SQL 함수,형변환,치환 변수&&",
             summary: "문자, 숫자, 날짜 처리를 위한 오라클 내장 함수를 숙달하고 데이터 타입의 명시적·묵시적 형변환을 적용해 보았으며, 이중 치환 변수(&&)를 활용한 동적 쿼리 작성 실습을 진행하며 복잡한 데이터 가공 및 재사용성 높은 SQL 튜닝 과정을 경험했습니다.",
-            tags: ["Oracle"],
+            tags: ["Oracle","SQL"],
             link: "https://blog.naver.com/10soong/224345468524"
         },
        {
             date: "2026-07-10",
             title: "14회차 - 오라클 SQL 실습(SELECT절, FROM절, WHERE절)",
             summary: "오라클 SQL의 핵심인 SELECT, FROM, WHERE 절을 활용하여 데이터베이스 내 데이터를 조건별로 필터링하고 원하는 구조로 추출하는 쿼리 작성 실습을 진행하며, 정밀한 데이터 조회 및 관계형 데이터베이스(RDB) 조작법 전반을 경험했습니다.",
-            tags: ["Oracle"],
+            tags: ["Oracle","SQL"],
             link: "https://blog.naver.com/10soong/224342753990"
         },
        {
