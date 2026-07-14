@@ -211,12 +211,26 @@ const DATA = {
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
         {
+            id: "quiz-ch04",
+            chapter: "CHAPTER 02",
+            title: "단일행 함수 실습 문제 (30문항)",
+            summary: "단일행 함수 문자, 중첩 함수, 숫자함수, 날짜산술",
+            date: "2026-07-14",
+            tags: ["Oracle", "SQL"],
+            
+            // 🤖 자동화를 위한 설정값 (여기가 핵심!)
+            // 본인 아이디를 반드시 알맞게 수정하세요!
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch04.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch04" 
+        },
+        {
             id: "quiz-ch03",
-            chapter: "CHAPTER 03",
+            chapter: "CHAPTER 01",
             title: "데이터 제한 및 정렬 실습 문제 (30문항)",
-            summary: "HR 스키마 기준 WHERE 절 필터링, 논리 연산자 조율, ORDER BY 정렬 순서 우선순위 및 FETCH FIRST 명령어 응용력을 검증하는 종합 문제 풀이 백서입니다.",
+            summary: "WHERE 절, 비교 연산자, BETWEEN/IN/LIKE/IS NULL, AND/OR/NOT, 연산자 우선순위, ORDER BY, FETCH FIRST, 대체 변수",
             date: "2026-07-13",
-            tags: ["Oracle", "WHERE", "ORDER BY"],
+            tags: ["Oracle", "SQL"],
             
             // 🤖 자동화를 위한 설정값 (여기가 핵심!)
             // 본인 아이디를 반드시 알맞게 수정하세요!
