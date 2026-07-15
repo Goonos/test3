@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-15",
+            title: "17회차 - 오라클11g SQL(JOIN,Subqueries,Multiple-Row Subqueries,Set Operators,DML)",
+            summary: "다양한 테이블의 관계를 분석하여 조건별 JOIN을 마스터하고 단일 및 다중 행 서브쿼리(Multiple-Row Subqueries)를 활용해 복잡한 조건의 중첩 데이터 필터링을 구현하였으며, 집합 연산자(Set Operators)를 통한 데이터 결합 및 DML(INSERT)을 사용한 실시간 데이터 조작 및 트랜잭션 처리 과정을 경험했습니다",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224347624957"
+        },
+       {
             date: "2026-07-14",
             title: "16회차 - 오라클 SQL NULL연산(NVL,NVL2)CASE,산술연산, Group by,Having, Join",
             summary: "오라클 SQL의 NVL, NVL2 함수 및 CASE 문을 활용한 데이터의 조건별 NULL 처리와 산술 연산을 수행하였으며, GROUP BY와 HAVING 절 기반의 대용량 데이터 그룹화 및 조건 필터링, 그리고 여러 테이블을 유기적으로 연결하는 다중 JOIN 문을 직접 작성하며 관계형 데이터베이스 집계 및 다차원 데이터 정제 과정을 경험했습니다.",
@@ -217,6 +224,40 @@ const DATA = {
     
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
+        {
+            id: "quiz-ch09",
+            chapter: "CHAPTER 07",
+            title: "집합 연산자 사용 실습 문제 (30문항)",
+            summary: "UNION, UNION ALL, INTERSECT, MINUS, 열 일치, ORDER BY",
+            date: "2026-07-22",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch09.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch09" 
+        },
+        {
+            id: "quiz-ch08",
+            chapter: "CHAPTER 06",
+            title: "서브쿼리를 활용한 쿼리 작성 실습 문제",
+            summary: "단일행 서브쿼리, 그룹 함수 서브쿼리, HAVING + 서브쿼리, 다중행(IN/ANY/ALL), 다중열, 인라인 뷰, NOT IN + NULL 처리",
+            date: "2026-07-21",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch08.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch08" 
+        },
         {
             id: "quiz-ch07",
             chapter: "CHAPTER 05",
