@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-16",
+            title: "18회차 - 오라클 11g (DML, TCL, DDL, 제약조건, PK, FP)",
+            summary: "오라클 11g의 DML을 활용한 데이터 제어 및 TCL을 통한 트랜잭션 관리를 진행하였으며, DDL로 테이블을 정의하고 기본키(PK)와 외래키(FK)를 포함한 핵심 제약조건을 직접 설정하며 정교한 데이터베이스 구조 구축 과정을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224347624957"
+        },
+       {
             date: "2026-07-15",
             title: "17회차 - 오라클11g SQL(JOIN,Subqueries,Multiple-Row Subqueries,Set Operators,DML)",
             summary: "다양한 테이블의 관계를 분석하여 조건별 JOIN을 마스터하고 단일 및 다중 행 서브쿼리(Multiple-Row Subqueries)를 활용해 복잡한 조건의 중첩 데이터 필터링을 구현하였으며, 집합 연산자(Set Operators)를 통한 데이터 결합 및 DML(INSERT)을 사용한 실시간 데이터 조작 및 트랜잭션 처리 과정을 경험했습니다",
