@@ -33,7 +33,7 @@ const DATA = {
                 { subtitle: "🔍 text", content: "text" },
                 { subtitle: "🛠️ text", content: "text" }
             ]
-        },
+        }, 
         {
             id: "ts-03", 
             title: "text",
