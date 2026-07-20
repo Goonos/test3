@@ -102,7 +102,7 @@ const DATA = {
             title: "17회차 - 오라클11g SQL(JOIN,Subqueries,Multiple-Row Subqueries,Set Operators,DML)",
             summary: "다양한 테이블의 관계를 분석하여 조건별 JOIN을 마스터하고 단일 및 다중 행 서브쿼리(Multiple-Row Subqueries)를 활용해 복잡한 조건의 중첩 데이터 필터링을 구현하였으며, 집합 연산자(Set Operators)를 통한 데이터 결합 및 DML(INSERT)을 사용한 실시간 데이터 조작 및 트랜잭션 처리 과정을 경험했습니다",
             tags: ["Oracle","SQL"],
-            link: "https://blog.naver.com/10soong/224347624957"
+            link: "https://blog.naver.com/10soong/224351782643"
         },
        {
             date: "2026-07-14",
