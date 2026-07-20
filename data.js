@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-20",
+            title: "19회차 - 오라클11g 제약조건,CASE CADE, SET NULL, VIEW, SEQUENCE, INDEX",
+            summary: "오라클 11g의 CASCADE 및 SET NULL 등 제약조건의 기본 옵션을 다뤄보고, VIEW, SEQUENCE, INDEX의 기본 생성 및 활용법을 학습하며 데이터베이스 객체의 기초 개념과 관리 과정을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224352291983"
+        },
+       {
             date: "2026-07-16",
             title: "18회차 - 오라클 11g (DML, TCL, DDL, 제약조건, PK, FP)",
             summary: "오라클 11g의 DML을 활용한 데이터 제어 및 TCL을 통한 트랜잭션 관리를 진행하였으며, DDL로 테이블을 정의하고 기본키(PK)와 외래키(FK)를 포함한 핵심 제약조건을 직접 설정하며 정교한 데이터베이스 구조 구축 과정을 경험했습니다.",
