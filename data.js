@@ -239,6 +239,23 @@ const DATA = {
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
         {
+            id: "quiz-ch14",
+            chapter: "CHAPTER 12",
+            title: "뷰(View) 생성, 수정 & 복합 뷰 & WITH CHECK OPTION & WITH READ ONLY 실습 문제 (30문항)",
+            summary: "뷰 생성 & 조회",
+            date: "2026-07-29",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch14.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch14" 
+        },
+        {
             id: "quiz-ch13",
             chapter: "CHAPTER 11",
             title: "시퀀스, 동의어, 인덱스 생성 실습 문제 (30문항)",
