@@ -239,6 +239,74 @@ const DATA = {
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
         {
+            id: "quiz-ch13",
+            chapter: "CHAPTER 11",
+            title: "시퀀스, 동의어, 인덱스 생성 실습 문제 (30문항)",
+            summary: "시퀀스, 동의어, 인덱스",
+            date: "2026-07-28",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch13.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch13" 
+        },
+        {
+            id: "quiz-ch12",
+            chapter: "CHAPTER 10",
+            title: "실습 문제 (30문항)",
+            summary: "",
+            date: "2026-07-27",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch12.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch12" 
+        },
+        {
+            id: "quiz-ch11",
+            chapter: "CHAPTER 09",
+            title: "데이터 정의 언어(DDL) 소개",
+            summary: "CREATE, 제약조건, 서브쿼리",
+            date: "2026-07-24",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch11.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch11" 
+        },
+        {
+            id: "quiz-ch10",
+            chapter: "CHAPTER 08",
+            title: "DML 문을 사용한 테이블 관리 실습 문제 (30문항)",
+            summary: "INSERT, UPDATE, DELETE, TRUNCATE, 트랜잭션 제어(COMMIT/ROLLBACK/SAVEPOINT)",
+            date: "2026-07-23",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch10.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch10" 
+        },
+        {
             id: "quiz-ch09",
             chapter: "CHAPTER 07",
             title: "집합 연산자 사용 실습 문제 (30문항)",
