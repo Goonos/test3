@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-21",
+            title: "20회차 - 오라클11g (Synonym for an Object, User Access, Creating a role, Object Privileges)",
+            summary: "Synonym을 활용한 객체 별칭 생성과 사용자 계정(User) 관리 기본을 익히고, Role을 통한 권한 그룹화 및 객체 권한(Object Privileges) 부여의 기초를 학습하며 오라클 11g의 데이터베이스 보안 및 접근 제어 개념 구축을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224353371434"
+        },
+       {
             date: "2026-07-20",
             title: "19회차 - 오라클11g 제약조건,CASE CADE, SET NULL, VIEW, SEQUENCE, INDEX",
             summary: "오라클 11g의 CASCADE 및 SET NULL 등 제약조건의 기본 옵션을 다뤄보고, VIEW, SEQUENCE, INDEX의 기본 생성 및 활용법을 학습하며 데이터베이스 객체의 기초 개념과 관리 과정을 경험했습니다.",
