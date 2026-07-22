@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-22",
+            title: "21회차 - 오라클11g 이터 아키텍처 모델링 DB 스키마 실습",
+            summary: "ERD 구조 해석 기반의 DB 스키마 구현부터 치환 변수(&)를 활용한 대화형 DML 작성, 뷰(View) 및 제약 조건(Constraints) 제어, 데이터 분석 보고서 작성까지 오라클 데이터베이스의 핵심 운용 프로세스를 종합적으로 실습했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224354614433"
+        },
+       {
             date: "2026-07-21",
             title: "20회차 - 오라클11g (Synonym for an Object, User Access, Creating a role, Object Privileges)",
             summary: "Synonym을 활용한 객체 별칭 생성과 사용자 계정(User) 관리 기본을 익히고, Role을 통한 권한 그룹화 및 객체 권한(Object Privileges) 부여의 기초를 학습하며 오라클 11g의 데이터베이스 보안 및 접근 제어 개념 구축을 경험했습니다.",
