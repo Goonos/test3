@@ -403,10 +403,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
                         pageHtml += `
-                            <div onclick="window.openQuizModal('${item.id}')" class="bg-gray-800/20 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/60 hover:border-emerald-500/30 transition h-44 cursor-pointer group">
+                            <div onclick="window.openQuizModal('${item.id}')" class="bg-gray-800/20 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/60 hover:border-blue-500/30 transition h-44 cursor-pointer group">
                                 <div>
                                     <span class="text-[10px] text-blue-400 font-mono font-bold">${item.chapter}</span> • <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
-                                    <h3 class="text-sm font-bold text-white mt-1 mb-1.5 line-clamp-1 group-hover:text-emerald-300 transition">${item.title}</h3>
+                                    <h3 class="text-sm font-bold text-white mt-1 mb-1.5 line-clamp-1 group-hover:text-blue-300 transition">${item.title}</h3>
                                     <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">${item.summary}</p>
                                 </div>
                                 <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
@@ -486,7 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mode === 'blog' && tabBlogBtn) {
                 tabBlogBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
             } else if (mode === 'quiz' && tabQuizBtn) {
-                tabQuizBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-emerald-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
+                tabQuizBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
             } else if (mode === 'project' && tabProjectBtn) {
                 tabProjectBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
             }
@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (quizModalBody) {
             quizModalBody.innerHTML = `
                 <div class="flex flex-col items-center justify-center h-40 text-gray-400">
-                    <i class="fas fa-spinner fa-spin text-2xl mb-2 text-emerald-500"></i>
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2 text-blue-500"></i>
                     <p class="text-xs">Github에서 문제 데이터를 불러오는 중입니다...</p>
                 </div>
             `;
@@ -624,14 +624,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <div class="flex flex-col gap-3 mt-2">
                             <div class="flex justify-end items-center">
-                                <button onclick="toggleAnswerCode('${rawFileUrl}', 'ans-${quizId}-${qNum}')" class="px-2.5 py-1.5 bg-emerald-500/10 text-blue-400 border border-emerald-500/20 text-xs font-medium rounded-md hover:bg-emerald-500/20 hover:border-emerald-500/40 cursor-pointer transition-all flex items-center gap-1.5">
+                                <button onclick="toggleAnswerCode('${rawFileUrl}', 'ans-${quizId}-${qNum}')" class="px-2.5 py-1.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-medium rounded-md hover:bg-blue-500/20 hover:border-blue-500/40 cursor-pointer transition-all flex items-center gap-1.5">
                                     <i class="fas fa-code"></i> 작성 SQL 보기 <i class="fas fa-chevron-down text-[10px] ml-0.5"></i>
                                 </button>
                             </div>
                             
                             <div id="ans-${quizId}-${qNum}" class="hidden w-full bg-slate-900/90 border border-slate-800 rounded-lg p-3 md:p-4 overflow-x-auto scrollbar-hide">
                                 <span class="block text-xs md:text-sm font-semibold tracking-wide text-blue-400 font-sans mb-2.5">📝 작성 SQL 스크립트</span>
-                                <pre class="text-[10px] md:text-xs text-emerald-300 font-mono whitespace-pre"><code class="language-sql">로딩 중...</code></pre>
+                                <pre class="text-[10px] md:text-xs text-blue-300 font-mono whitespace-pre"><code class="language-sql">로딩 중...</code></pre>
                             </div>
                         </div>
                     </div>
