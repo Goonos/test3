@@ -456,7 +456,7 @@ const DATA = {
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
             prefix: "ch03" 
         }
-    ]
+    ],
     miniProjects: [
         {
             id: "proj-01",
