@@ -263,7 +263,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch14.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -280,7 +280,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch13.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -297,7 +297,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch12.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -314,7 +314,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch11.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -331,7 +331,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch10.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -348,7 +348,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch09.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -365,7 +365,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch08.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -382,7 +382,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch07.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -399,7 +399,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch06.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -416,7 +416,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch05.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -433,7 +433,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch04.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
@@ -450,7 +450,7 @@ const DATA = {
                 <strong>🛠️ 실습 환경</strong><br>
                 - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
                 - SQL 문제들을 직접 풀어본 내용입니다.<br>
-                - 각 문항 하단의 <span class="text-emerald-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
             `,
             mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch03.md", 
             githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
