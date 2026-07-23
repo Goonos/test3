@@ -346,30 +346,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 💡 3. 블로그 및 퀴즈 아카이브 멀티 통합 슬라이더
+    // 💡 3. 블로그, 퀴즈, 프로젝트 통합 멀티 슬라이더
     // ==========================================
     try {
         const blogContainer = document.getElementById("blog-container");
         const quizContainer = document.getElementById("quiz-container");
+        const projectContainer = document.getElementById("project-container");
         const logIndicator = document.getElementById("log-indicator");
         const logIndicatorMobile = document.getElementById("log-indicator-mobile");
         
         const tabBlogBtn = document.getElementById("tab-blog");
         const tabQuizBtn = document.getElementById("tab-quiz");
+        const tabProjectBtn = document.getElementById("tab-project");
 
         let currentMode = 'blog'; 
         let blogPage = 0;
         let quizPage = 0;
+        let projectPage = 0;
         const itemsPerPage = 6;
 
         function initLogs() {
-            // 1. 블로그 컨테이너 렌더링 (원래 사이즈 복구)
+            // 1. 블로그 컨테이너 렌더링
             if (blogContainer && DATA.blogLogs) {
                 blogContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.blogLogs.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.blogLogs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    // 💡 여기서 카드를 2개씩 배치하도록 잡아줍니다.
                     let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
@@ -391,13 +393,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // 2. 퀴즈 아카이브 렌더링 (원래 사이즈 복구)
+            // 2. 퀴즈 아카이브 렌더링
             if (quizContainer && DATA.quizzes) {
                 quizContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.quizzes.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.quizzes.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    // 💡 여기서 카드를 2개씩 배치하도록 잡아줍니다.
                     let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-emerald-400 bg-emerald-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
@@ -419,13 +420,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // 3. 미니 프로젝트 렌더링 (동일하게 2개씩 배치 적용)
+            // 3. 미니 프로젝트 렌더링
             if (projectContainer && DATA.miniProjects) {
                 projectContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.miniProjects.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.miniProjects.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    // 💡 프로젝트 카드도 2개씩 깔끔하게 분할됩니다.
                     let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-purple-400 bg-purple-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
@@ -452,18 +452,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function updateLogSlider() {
             const isBlog = (currentMode === 'blog');
-            const activeContainer = isBlog ? blogContainer : quizContainer;
-            const targetPage = isBlog ? blogPage : quizPage;
-            const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
-            const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
+            const isQuiz = (currentMode === 'quiz');
+            const isProject = (currentMode === 'project');
 
-            if(isBlog) {
-                blogContainer.classList.remove("hidden");
-                quizContainer.classList.add("hidden");
-            } else {
-                quizContainer.classList.remove("hidden");
-                blogContainer.classList.add("hidden");
-            }
+            if(blogContainer) blogContainer.classList.toggle("hidden", !isBlog);
+            if(quizContainer) quizContainer.classList.toggle("hidden", !isQuiz);
+            if(projectContainer) projectContainer.classList.toggle("hidden", !isProject);
+
+            let activeContainer, targetPage, dataLength;
+            
+            if (isBlog) { activeContainer = blogContainer; targetPage = blogPage; dataLength = DATA.blogLogs?.length || 0; }
+            else if (isQuiz) { activeContainer = quizContainer; targetPage = quizPage; dataLength = DATA.quizzes?.length || 0; }
+            else { activeContainer = projectContainer; targetPage = projectPage; dataLength = DATA.miniProjects?.length || 0; }
+
+            const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
 
             if (activeContainer) {
                 activeContainer.style.transform = `translateX(-${targetPage * 100}%)`;
@@ -476,27 +478,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function switchTab(mode) {
             currentMode = mode;
-            if (mode === 'blog') {
+            [tabBlogBtn, tabQuizBtn, tabProjectBtn].forEach(btn => {
+                if(!btn) return;
+                btn.className = "tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5";
+            });
+
+            if (mode === 'blog' && tabBlogBtn) {
                 tabBlogBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-blue-400 border-t-2 border-t-blue-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
-                tabQuizBtn.className = "tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5";
-            } else {
+            } else if (mode === 'quiz' && tabQuizBtn) {
                 tabQuizBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-emerald-400 border-t-2 border-t-emerald-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
-                tabBlogBtn.className = "tab-btn px-4 py-2.5 rounded-t-xl bg-transparent text-gray-500 border border-transparent -mb-[1px] hover:text-gray-300 transition cursor-pointer flex items-center gap-1.5";
+            } else if (mode === 'project' && tabProjectBtn) {
+                tabProjectBtn.className = "tab-btn active px-4 py-2.5 rounded-t-xl bg-gray-800 text-purple-400 border-t-2 border-t-purple-500 border-x border-gray-700 -mb-[1px] z-10 font-bold transition cursor-pointer flex items-center gap-1.5";
             }
             updateLogSlider();
         }
 
         tabBlogBtn?.addEventListener("click", () => switchTab('blog'));
         tabQuizBtn?.addEventListener("click", () => switchTab('quiz'));
+        tabProjectBtn?.addEventListener("click", () => switchTab('project'));
 
         const navigate = (direction) => {
-            const isBlog = (currentMode === 'blog');
-            const dataLength = isBlog ? DATA.blogLogs.length : DATA.quizzes.length;
-            const totalPages = Math.max(Math.ceil(dataLength / itemsPerPage), 1);
-            
-            if (isBlog) blogPage = (blogPage + direction + totalPages) % totalPages;
-            else quizPage = (quizPage + direction + totalPages) % totalPages;
-            
+            if (currentMode === 'blog') {
+                const totalPages = Math.max(Math.ceil((DATA.blogLogs?.length || 0) / itemsPerPage), 1);
+                blogPage = (blogPage + direction + totalPages) % totalPages;
+            } else if (currentMode === 'quiz') {
+                const totalPages = Math.max(Math.ceil((DATA.quizzes?.length || 0) / itemsPerPage), 1);
+                quizPage = (quizPage + direction + totalPages) % totalPages;
+            } else {
+                const totalPages = Math.max(Math.ceil((DATA.miniProjects?.length || 0) / itemsPerPage), 1);
+                projectPage = (projectPage + direction + totalPages) % totalPages;
+            }
             updateLogSlider();
         };
 
