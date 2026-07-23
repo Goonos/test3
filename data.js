@@ -296,8 +296,8 @@ const DATA = {
         {
             id: "quiz-ch12",
             chapter: "CHAPTER 10",
-            title: "실습 문제 (30문항)",
-            summary: "",
+            title: "데이터 딕셔너리 뷰 실습 문제 (30문항)",
+            summary: "데이터 딕셔너리 뷰는 읽기 전용 메타데이터이므로 푸는 문제가 없어 이해에 집중했다.",
             date: "2026-07-27",
             tags: ["Oracle", "SQL"],
             guideHTML: `
