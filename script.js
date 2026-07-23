@@ -873,15 +873,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (proj.qaList && proj.qaList.length > 0) {
                 proj.qaList.forEach((qa, idx) => {
                     rightHtml += `
-                        <div class="pb-6 border-b border-gray-800/60 last:border-0 last:pb-0">
-                            <h5 class="text-white font-bold text-sm md:text-base leading-relaxed mb-3">
-                                <span class="text-blue-400 mr-1">Q${idx + 1}.</span> ${qa.question}
-                            </h5>
-                            <div class="bg-gray-950/80 border border-gray-800 rounded-lg p-3 md:p-4 w-full">
-                                <pre class="w-full overflow-x-auto pb-2 text-[10px] md:text-xs font-mono [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-gray-950 [&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-500"><code class="language-sql">${qa.code.trim()}</code></pre>
-                            </div>
-                        </div>
-                    `;
+    <div class="pb-6 border-b border-gray-800/60 last:border-0 last:pb-0">
+        <h5 class="text-white font-bold text-sm md:text-base leading-relaxed mb-3">
+            <span class="text-blue-400 mr-1">Q${idx + 1}.</span> ${qa.question}
+        </h5>
+        <div class="bg-gray-950/80 border border-gray-800 rounded-lg p-3 md:p-4 overflow-x-auto [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-gray-950 [&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-500">
+            <pre class="text-[10px] md:text-xs font-mono [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-500"><code class="language-sql">${qa.code.trim()}</code></pre>
+        </div>
+    </div>
+`;
                 });
             }
             projModalRight.innerHTML = rightHtml;
