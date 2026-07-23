@@ -457,5 +457,19 @@ const DATA = {
             prefix: "ch03" 
         }
     ]
+    miniProjects: [
+        {
+            id: "proj-01",
+            date: "2026-07-25",
+            title: "비디오 대여점 DB 구축 모델링",
+            summary: "요구사항 명세 및 ERD를 분석하여 물리적 스키마(DDL)를 설계/구축하고 비즈니스 로직을 구현한 프로젝트입니다.",
+            tags: ["DB Modeling", "SQL", "DDL/DML"],
+            
+            // 🔥 깃허브 페이지(GitHub Pages) 절대 경로 주소 사용
+            docUrl: "https://goonos.github.io/test3/docs/video_rental.pdf", 
+            
+            qaList: PROJECT_QA_DATA["proj-01"] 
+        }
+    ]
 };
 
