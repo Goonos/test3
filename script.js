@@ -859,8 +859,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (projModalLeft) {
             const isPdf = proj.docUrl.toLowerCase().endsWith('.pdf');
             if (isPdf) {
-                // PDF일 경우 iframe 사용
-                projModalLeft.innerHTML = `<iframe src="${proj.docUrl}" class="w-full h-full border-none"></iframe>`;
+                // 🔥 PDF 뒤에 #toolbar=0&navpanes=0&view=FitH 옵션을 추가합니다.
+                projModalLeft.innerHTML = `<iframe src="${proj.docUrl}#toolbar=0&navpanes=0&view=FitH" class="w-full h-full border-none"></iframe>`;
             } else {
                 // 이미지일 경우 img 태그 사용
                 projModalLeft.innerHTML = `<img src="${proj.docUrl}" class="w-full h-full object-contain bg-gray-950">`;
