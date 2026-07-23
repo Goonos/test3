@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </div>
                                 <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
                                     <div class="flex flex-wrap gap-1">${tagsHtml}</div>
-                                    <a href="${item.link}" target="_blank" class="text-[10px] text-gray-400 hover:text-blue-400 font-medium shrink-0 ml-2">원문 ↗</a>
+                                    <button onclick="window.openProjectModal('${item.id}')" class="text-[10px] text-gray-400 group-hover:text-purple-400 font-medium shrink-0 ml-2 cursor-pointer">열기 ↗</button>
                                 </div>
                             </div>`;
                     });
@@ -790,4 +790,96 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {
         console.error("Highlight.js 모듈 로드 누락 예외 처리:", e);
     }
+
+    // ==========================================
+    // 💡 미니 프로젝트 팝업 모달 제어 함수 (A4 분할뷰)
+    // ==========================================
+    const projModal = document.getElementById("project-modal");
+    const projModalContent = document.getElementById("project-modal-content");
+    const projModalCloseBtn = document.getElementById("project-modal-close");
+    const projModalDate = document.getElementById("project-modal-date");
+    const projModalTitle = document.getElementById("project-modal-title");
+    const projModalLeft = document.getElementById("project-modal-left");
+    const projModalRight = document.getElementById("project-modal-right");
+
+    window.openProjectModal = function(projId) {
+        if (!DATA.miniProjects) return;
+        const proj = DATA.miniProjects.find(p => p.id === projId);
+        if (!proj) return;
+
+        // 1. 헤더 데이터 주입
+        if (projModalDate) projModalDate.innerText = proj.date;
+        if (projModalTitle) projModalTitle.innerText = proj.title;
+        
+        // 2. 왼쪽 영역: PDF 또는 이미지 주입
+        if (projModalLeft) {
+            const isPdf = proj.docUrl.toLowerCase().endsWith('.pdf');
+            if (isPdf) {
+                // PDF일 경우 iframe 사용
+                projModalLeft.innerHTML = `<iframe src="${proj.docUrl}" class="w-full h-full border-none"></iframe>`;
+            } else {
+                // 이미지일 경우 img 태그 사용
+                projModalLeft.innerHTML = `<img src="${proj.docUrl}" class="w-full h-full object-contain bg-gray-950">`;
+            }
+        }
+
+        // 3. 오른쪽 영역: 문제 및 코드 리스트 주입
+        if (projModalRight) {
+            let rightHtml = '';
+            if (proj.qaList && proj.qaList.length > 0) {
+                proj.qaList.forEach((qa, idx) => {
+                    rightHtml += `
+                        <div class="pb-6 border-b border-gray-800/60 last:border-0 last:pb-0">
+                            <h5 class="text-white font-bold text-sm md:text-base leading-relaxed mb-3">
+                                <span class="text-purple-400 mr-1">Q${idx + 1}.</span> ${qa.question}
+                            </h5>
+                            <div class="bg-gray-950/80 border border-gray-800 rounded-lg p-3 md:p-4 overflow-x-auto scrollbar-hide">
+                                <pre class="text-[10px] md:text-xs font-mono"><code class="language-sql">${qa.code.trim()}</code></pre>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            projModalRight.innerHTML = rightHtml;
+        }
+
+        // 4. 모달 열기 및 애니메이션 적용
+        if (projModal) {
+            projModal.classList.remove("hidden");
+            void projModal.offsetWidth;
+            projModal.classList.remove("opacity-0", "pointer-events-none");
+            projModal.classList.add("flex");
+            if (projModalContent) projModalContent.classList.replace("scale-95", "scale-100");
+            document.body.style.overflow = "hidden"; // 배경 스크롤 방지
+        }
+
+        // 5. 우측 코드 블록 구문 강조(Highlight.js) 적용
+        setTimeout(() => {
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('#project-modal-right pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        }, 100);
+    };
+
+    window.closeProjectModal = function() {
+        if (projModal) {
+            projModal.classList.add("opacity-0", "pointer-events-none");
+            if (projModalContent) projModalContent.classList.replace("scale-100", "scale-95");
+            setTimeout(() => {
+                projModal.classList.add("hidden");
+                projModal.classList.remove("flex");
+                document.body.style.overflow = "";
+                // iframe 및 내용 초기화 (메모리 확보 및 영상 소리 꺼짐 효과)
+                if (projModalLeft) projModalLeft.innerHTML = "";
+                if (projModalRight) projModalRight.innerHTML = "";
+            }, 300);
+        }
+    };
+
+    projModalCloseBtn?.addEventListener("click", window.closeProjectModal);
+    projModal?.addEventListener("click", (e) => { 
+        if (e.target === projModal) window.closeProjectModal(); 
+    });
 }); // 💡 여기가 유일하고 올바른 닫는 괄호입니다!
