@@ -430,6 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
                         pageHtml += `
+    
     <div onclick="window.openProjectModal('${item.id}')" class="bg-gray-800/30 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/60 hover:border-blue-500/30 transition h-44 cursor-pointer group">
         <div>
             <span class="text-[10px] text-blue-400 font-mono font-bold">PROJECT</span> • <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
@@ -438,6 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
             <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+          -->
             <span class="text-[10px] text-gray-400 group-hover:text-blue-400 font-medium shrink-0 ml-2 transition">열기 ↗</span>
         </div>
     </div>`;
