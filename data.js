@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-23",
+            title: "22회차 - 오라클11g ALTER Statement UNUSED, 제약조건 수정(추가, 삭제, 옵션추가, enable, disable 등), INDEX, FLASHBACK",
+            summary: "ALTER 문을 활용한 컬럼 비활성화(SET UNUSED) 및 제약조건 수정(추가, 삭제, ENABLE/DISABLE) 기초를 학습하고, INDEX의 기본 동작 방식과 FLASHBACK을 통한 기초 데이터 복구 개념을 익히며 오라클 11g 데이터베이스 구조 변경 및 관리 전반을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224355660844"
+        },
+       {
             date: "2026-07-22",
             title: "21회차 - 오라클11g 이터 아키텍처 모델링 DB 스키마 실습",
             summary: "ERD 구조 해석 기반의 DB 스키마 구현부터 치환 변수(&)를 활용한 대화형 DML 작성, 뷰(View) 및 제약 조건(Constraints) 제어, 데이터 분석 보고서 작성까지 오라클 데이터베이스의 핵심 운용 프로세스를 종합적으로 실습했습니다.",
