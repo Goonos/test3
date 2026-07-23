@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const totalPages = Math.ceil(DATA.blogLogs.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.blogLogs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border content-start">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
                         pageHtml += `
@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const totalPages = Math.ceil(DATA.quizzes.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.quizzes.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border content-start">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
                         pageHtml += `
@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const totalPages = Math.ceil(DATA.miniProjects.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.miniProjects.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
-                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border content-start">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
                         pageHtml += `
