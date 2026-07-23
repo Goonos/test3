@@ -363,11 +363,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const itemsPerPage = 6;
 
         function initLogs() {
+            // 1. 블로그 컨테이너 렌더링 (원래 사이즈 복구)
             if (blogContainer && DATA.blogLogs) {
                 blogContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.blogLogs.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.blogLogs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                    // 💡 여기서 카드를 2개씩 배치하도록 잡아줍니다.
                     let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-blue-400 bg-blue-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
@@ -380,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </div>
                                 <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
                                     <div class="flex flex-wrap gap-1">${tagsHtml}</div>
-                                    <button onclick="window.openProjectModal('${item.id}')" class="text-[10px] text-gray-400 group-hover:text-purple-400 font-medium shrink-0 ml-2 cursor-pointer">열기 ↗</button>
+                                    <a href="${item.link}" target="_blank" class="text-[10px] text-gray-400 hover:text-blue-400 font-medium shrink-0 ml-2">원문 ↗</a>
                                 </div>
                             </div>`;
                     });
@@ -389,11 +391,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            // 2. 퀴즈 아카이브 렌더링 (원래 사이즈 복구)
             if (quizContainer && DATA.quizzes) {
                 quizContainer.innerHTML = "";
                 const totalPages = Math.ceil(DATA.quizzes.length / itemsPerPage);
                 for (let i = 0; i < totalPages; i++) {
                     const chunk = DATA.quizzes.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                    // 💡 여기서 카드를 2개씩 배치하도록 잡아줍니다.
                     let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
                     chunk.forEach(item => {
                         const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-emerald-400 bg-emerald-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
@@ -414,6 +418,35 @@ document.addEventListener("DOMContentLoaded", () => {
                     quizContainer.innerHTML += pageHtml;
                 }
             }
+
+            // 3. 미니 프로젝트 렌더링 (동일하게 2개씩 배치 적용)
+            if (projectContainer && DATA.miniProjects) {
+                projectContainer.innerHTML = "";
+                const totalPages = Math.ceil(DATA.miniProjects.length / itemsPerPage);
+                for (let i = 0; i < totalPages; i++) {
+                    const chunk = DATA.miniProjects.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                    // 💡 프로젝트 카드도 2개씩 깔끔하게 분할됩니다.
+                    let pageHtml = `<div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-4 px-1 box-border">`;
+                    chunk.forEach(item => {
+                        const tagsHtml = item.tags.map(tag => `<span class="text-[10px] text-purple-400 bg-purple-500/5 px-2 py-0.5 rounded font-mono">#${tag}</span>`).join(" ");
+                        pageHtml += `
+                            <div class="bg-gray-800/30 border border-gray-800 rounded-lg p-4 flex flex-col justify-between hover:bg-gray-800/60 hover:border-purple-500/30 transition h-44 group">
+                                <div>
+                                    <span class="text-[10px] text-purple-400 font-mono font-bold">PROJECT</span> • <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
+                                    <h3 class="text-sm font-bold text-white mt-1 mb-1.5 line-clamp-1 group-hover:text-purple-300 transition">${item.title}</h3>
+                                    <p class="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">${item.summary}</p>
+                                </div>
+                                <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800/50">
+                                    <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                                    <button onclick="window.openProjectModal('${item.id}')" class="text-[10px] text-gray-400 group-hover:text-purple-400 font-medium shrink-0 ml-2 cursor-pointer">열기 ↗</button>
+                                </div>
+                            </div>`;
+                    });
+                    pageHtml += `</div>`;
+                    projectContainer.innerHTML += pageHtml;
+                }
+            }
+            
             updateLogSlider();
         }
 
