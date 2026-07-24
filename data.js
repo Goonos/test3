@@ -91,6 +91,13 @@ const DATA = {
     // 3. 외부 블로그 링크 데이터
    blogLogs: [
        {
+            date: "2026-07-24",
+            title: "23회차 - 오라클11g Temporary Tables,External Tables, MERGE,Version query,Time Zones",
+            summary: "Temporary Tables와 External Tables의 기초 개념을 익히고, MERGE 문을 활용한 데이터 통합 처리법을 학습하였으며, Version query 및 Time Zone 설정의 기본을 다루며 오라클 11g의 고급 데이터 관리 기능 전반을 경험했습니다.",
+            tags: ["Oracle","SQL"],
+            link: "https://blog.naver.com/10soong/224356756040"
+        },
+       {
             date: "2026-07-23",
             title: "22회차 - 오라클11g ALTER Statement UNUSED, 제약조건 수정(추가, 삭제, 옵션추가, enable, disable 등), INDEX, FLASHBACK",
             summary: "ALTER 문을 활용한 컬럼 비활성화(SET UNUSED) 및 제약조건 수정(추가, 삭제, ENABLE/DISABLE) 기초를 학습하고, INDEX의 기본 동작 방식과 FLASHBACK을 통한 기초 데이터 복구 개념을 익히며 오라클 11g 데이터베이스 구조 변경 및 관리 전반을 경험했습니다.",
