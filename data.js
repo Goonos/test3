@@ -491,6 +491,74 @@ const DATA = {
     // 💡 4. 신규 오라클 워크숍 퀴즈 데이터 세트 구축
     quizzes: [
         {
+            id: "quiz-ch18",
+            chapter: "CHAPTER 16",
+            title: "사용자 접근 제어 SQL 실습 문제",
+            summary: "사용자 접근 제어",
+            date: "2026-08-04",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch18.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch18" 
+        },
+        {
+            id: "quiz-ch17",
+            chapter: "CHAPTER 15",
+            title: "서브쿼리를 이용한 데이터 조작 SQL 실습 문제",
+            summary: "서브쿼리를 이용한 데이터 조작",
+            date: "2026-08-03",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch17.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch17" 
+        },
+        {
+            id: "quiz-ch16",
+            chapter: "CHAPTER 14",
+            title: "서브쿼리를 이용한 데이터 조회 SQL 실습 문제",
+            summary: "서브쿼리를 이용한 데이터 조회",
+            date: "2026-07-31",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch16.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch16" 
+        },
+        {
+            id: "quiz-ch15",
+            chapter: "CHAPTER 13",
+            title: "스키마 객체 관리 SQL 실습 문제 30문제",
+            summary: "스키마 객체 관리",
+            date: "2026-07-30",
+            tags: ["Oracle", "SQL"],
+            guideHTML: `
+                <strong>🛠️ 실습 환경</strong><br>
+                - DB버전: Oracle Database 11g / 사용 스키마: HR<br>
+                - SQL 문제들을 직접 풀어본 내용입니다.<br>
+                - 각 문항 하단의 <span class="text-blue-400 font-bold">[작성 SQL 보기]</span> 단추를 클릭하면 작성했던 답안을 펼쳐줍니다.
+            `,
+            mdRawUrl: "https://raw.githubusercontent.com/Goonos/test3/main/quizzes/ch15.md", 
+            githubBaseUrl: "https://github.com/Goonos/test3/blob/main/quizzes/answers",
+            prefix: "ch15" 
+        },
+        {
             id: "quiz-ch14",
             chapter: "CHAPTER 12",
             title: "뷰(View) 생성, 수정 & 복합 뷰 & WITH CHECK OPTION & WITH READ ONLY 실습 문제 (30문항)",
